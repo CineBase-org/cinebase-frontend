@@ -3,6 +3,10 @@
 @use "fonts";
 @use "typography";
 
+html {
+    font-size: 100%;
+}
+
 *,
 *::before,
 *::after {

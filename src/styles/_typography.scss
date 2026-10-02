@@ -1,0 +1,51 @@
+@mixin text-heading-1 {
+    font-family: $font-family-headline;
+    font-weight: 700;
+    font-size: rem(24);
+}
+
+@mixin text-heading-2 {
+    font-family: $font-family-headline;
+    font-weight: 700;
+    font-size: rem(16);
+
+    @include respond-to("desktop") {
+        font-size: rem(12);
+    }
+}
+
+@mixin text-caption {
+    font-family: $font-family-base;
+    font-weight: 500;
+    font-size: rem(12);
+}
+
+@mixin text-body {
+    font-family: $font-family-base;
+    font-weight: 400;
+    font-size: rem(10);
+
+    @include respond-to("desktop") {
+        font-size: rem(12);
+    }
+}
+
+@mixin text-nav {
+    font-family: $font-family-base;
+    font-weight: 700;
+    font-size: rem(12);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    @include respond-to("desktop") {
+        font-size: rem(14);
+        text-transform: none;
+
+        font-weight: 400;
+        letter-spacing: normal;
+
+        &.active {
+            font-weight: 500;
+        }
+    }
+}
