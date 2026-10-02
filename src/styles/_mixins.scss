@@ -1,15 +1,15 @@
 $breakpoints: (
-    "mobile": 480px,
     "tablet": 768px,
     "laptop": 1024px,
-    "desktop": 1440px,
+    "desktop": 1280px,
+    "wide": 1440px,
 );
 
 @mixin respond-to($breakpoint-name) {
     $breakpoint-value: map-get($breakpoints, $breakpoint-name);
 
     @if $breakpoint-value {
-        @media (max-width: $breakpoint-value) {
+        @media (min-width: $breakpoint-value) {
             @content;
         }
     } @else {

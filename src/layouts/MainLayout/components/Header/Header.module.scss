@@ -1,0 +1,223 @@
+.header {
+    position: relative;
+    z-index: 9999;
+    width: 100%;
+
+    background-color: $color-bg-surface;
+    border-radius: rem(26);
+    min-height: rem(48);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-inline: rem(14);
+
+    @include respond-to(tablet) {
+        padding-inline: rem(20);
+    }
+
+    @include respond-to(desktop) {
+        padding-inline: rem(26);
+        min-height: rem(56);
+    }
+}
+
+.leftGroup {
+    align-self: stretch;
+
+    display: flex;
+    align-items: center;
+    gap: rem(68);
+}
+
+.actionsGroup {
+    display: flex;
+    align-items: center;
+    gap: rem(18);
+}
+
+.menuButton {
+    color: $color-accent;
+    width: rem(26);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include respond-to(tablet) {
+        display: none;
+    }
+}
+
+.XButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+
+    width: rem(26);
+    height: rem(26);
+
+    background-color: $color-icon;
+    border-radius: 100%;
+    color: $color-accent;
+    cursor: pointer;
+
+    transition: box-shadow $time-base $ease-out-apple;
+    box-shadow: none;
+
+    &:hover {
+        box-shadow: 0 1px 0 #fff;
+    }
+
+    @include respond-to(tablet) {
+        display: none;
+    }
+}
+
+.searchButton {
+    color: $color-accent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include respond-to(laptop) {
+        display: none;
+    }
+}
+
+.searchInput {
+    @include text-input;
+    border: none;
+    background-color: transparent;
+    outline: none;
+
+    &::placeholder {
+        color: $color-input-text;
+    }
+
+    @include respond-to(desktop) {
+        width: rem(160);
+    }
+}
+
+.searchInputWrapper {
+    display: none;
+
+    @include respond-to(laptop) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: $color-input;
+        border-radius: rem(20);
+        height: rem(28);
+        width: rem(160);
+    }
+
+    @include respond-to(desktop) {
+        border-radius: rem(20);
+        height: rem(30);
+        width: rem(194);
+    }
+
+    transition: box-shadow $time-base $ease-out-apple;
+    box-shadow: none;
+
+    &:hover {
+        box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    &:focus-within {
+        box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.userLink,
+.bellButton {
+    color: $color-accent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    font-family: $font-family-headline;
+    color: $color-accent;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: rem(16);
+
+    @include respond-to(desktop) {
+        font-size: rem(20);
+    }
+}
+
+.nav {
+    display: none;
+
+    @include respond-to(tablet) {
+        align-self: stretch;
+        display: flex;
+    }
+}
+
+.mobileNav {
+    z-index: 999;
+    position: fixed;
+    inset: 0;
+    background-color: $color-bg-base;
+
+    @include respond-to(tablet) {
+        display: none;
+    }
+}
+
+.list {
+    margin-top: rem(106);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+
+    gap: rem(32);
+
+    @include respond-to(tablet) {
+        margin-top: 0;
+        flex-direction: row;
+        align-items: stretch;
+
+        gap: rem(24);
+    }
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    padding-inline: rem(10);
+
+    height: 100%;
+    text-decoration: none;
+    @include text-nav;
+
+    transition: box-shadow $time-base $ease-out-apple;
+    box-shadow: none;
+
+    &:hover {
+        text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+    }
+
+    &Accent {
+        color: $color-gold;
+
+        &:hover {
+            text-shadow: 0 0 8px rgba($color-gold, 0.7);
+        }
+    }
+}

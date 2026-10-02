@@ -1,17 +1,10 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 @mixin text-heading-1 {
     font-family: $font-family-headline;
     font-weight: 700;
     font-size: rem(24);
-}
-
-@mixin text-heading-2 {
-    font-family: $font-family-headline;
-    font-weight: 700;
-    font-size: rem(16);
-
-    @include respond-to("desktop") {
-        font-size: rem(12);
-    }
 }
 
 @mixin text-caption {
@@ -25,8 +18,19 @@
     font-weight: 400;
     font-size: rem(10);
 
-    @include respond-to("desktop") {
+    @include respond-to(desktop) {
         font-size: rem(12);
+    }
+}
+
+@mixin text-input {
+    font-family: $font-family-base;
+    font-weight: 400;
+    font-size: rem(10);
+    color: $color-input-text;
+
+    @include respond-to(desktop) {
+        font-size: rem(14);
     }
 }
 
@@ -36,15 +40,19 @@
     font-size: rem(12);
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    color: $color-gray-secondary;
 
-    @include respond-to("desktop") {
+    @include respond-to(tablet) {
         font-size: rem(14);
         text-transform: none;
+
+        color: $color-gray;
 
         font-weight: 400;
         letter-spacing: normal;
 
         &.active {
+            color: $color-white;
             font-weight: 500;
         }
     }

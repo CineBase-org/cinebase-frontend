@@ -1,9 +1,24 @@
 // COLORS
+$color-white: #fff;
 $color-bg-base: #090a0e;
 $color-bg-surface: #18181a;
+$color-icon: #333333;
+$color-input: #242426;
+$color-input-text: #616161;
 $color-accent: #e50914;
-$color-caption: #C6C7C9;
+$color-caption: #c6c7c9;
+$color-gray: #9e9e9e;
+$color-gray-secondary: #89939a;
+$color-gold: #d4a359;
 
 // FONTS
-$font-family-headline: Montserrat, 'Segoe UI', Roboto, Arial, sans-serif;
-$font-family-base: Inter, 'Segoe UI', Roboto, Arial, sans-serif;
+$font-family-headline: Montserrat, "Segoe UI", Roboto, Arial, sans-serif;
+$font-family-base: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+
+// ANIMATION DURATION
+$time-fast: 150ms;
+$time-base: 300ms;
+$time-slow: 500ms;
+
+// EASINGS
+$ease-out-apple: cubic-bezier(0.32, 0.72, 0, 1);
