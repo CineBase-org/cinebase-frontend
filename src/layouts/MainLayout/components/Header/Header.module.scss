@@ -1,7 +1,6 @@
 .header {
     position: relative;
     z-index: 9999;
-    width: 100%;
 
     background-color: $color-bg-surface;
     border-radius: rem(26);
@@ -134,12 +133,22 @@
     }
 }
 
-.userLink,
-.bellButton {
+.userLink {
     color: $color-accent;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.bellButton {
+    color: $color-icon;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include respond-to(laptop) {
+        color: $color-accent;
+    }
 }
 
 .logo {
