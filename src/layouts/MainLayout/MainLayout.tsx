@@ -8,10 +8,10 @@ export const MainLayout = () => {
     return (
         <div className={styles.wrapper}>
             <Header className={styles.header} />
-            <main>
+            <main className={styles.main}>
                 <Outlet />
             </main>
-            <Footer />
+            <Footer className={styles.footer} />
         </div>
     );
 };

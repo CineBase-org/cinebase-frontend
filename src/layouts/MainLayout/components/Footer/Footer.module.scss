@@ -1,0 +1,97 @@
+.footer {
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: rem(8) rem(16);
+}
+
+.logo {
+    font-family: $font-family-headline;
+    color: $color-accent;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: rem(12);
+
+    @include respond-to(laptop) {
+        font-size: rem(20);
+    }
+}
+
+.contact,
+.about,
+.backToTopText {
+    font-family: $font-family-base;
+    font-weight: 500;
+    font-size: rem(10);
+    color: $color-gray-thirty;
+    text-decoration: none;
+
+    transition: box-shadow $time-base $ease-out-apple;
+    box-shadow: none;
+
+    &:hover {
+        text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+    }
+
+    @include respond-to(laptop) {
+        color: $color-white;
+        font-size: rem(14);
+    }
+}
+
+.about {
+    display: none;
+
+    @include respond-to(tablet) {
+        display: block;
+    }
+}
+
+.backToTop {
+    display: none;
+
+    @include respond-to(tablet) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.backToTopButton {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+
+    @include respond-to(laptop) {
+        gap: rem(16);
+    }
+}
+
+.iconWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: $color-white;
+    width: rem(24);
+    height: rem(24);
+
+    border: rem(1) solid $color-gray-thirty;
+    border-radius: 100%;
+
+    transition: border-color $time-base $ease-out-apple;
+
+    .backToTopButton:hover & {
+        border-color: $color-gray-secondary;
+    }
+
+    .backToTopButton:active & {
+        border-color: $color-white;
+    }
+
+    @include respond-to(laptop) {
+        width: rem(32);
+        height: rem(32);
+    }
+}
