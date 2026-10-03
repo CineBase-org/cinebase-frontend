@@ -1,3 +1,6 @@
+@use "sass:math";
+@use "sass:map";
+
 $breakpoints: (
     "tablet": 768px,
     "laptop": 1024px,
@@ -6,7 +9,7 @@ $breakpoints: (
 );
 
 @mixin respond-to($breakpoint-name) {
-    $breakpoint-value: map-get($breakpoints, $breakpoint-name);
+    $breakpoint-value: map.get($breakpoints, $breakpoint-name);
 
     @if $breakpoint-value {
         @media (min-width: $breakpoint-value) {
@@ -18,5 +21,5 @@ $breakpoints: (
 }
 
 @function rem($pixel) {
-    @return ($pixel / 16) * 1rem;
+    @return math.div($pixel, 16) * 1rem;
 }
