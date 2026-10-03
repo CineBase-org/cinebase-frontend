@@ -1,13 +1,19 @@
-
 .wrapper {
-  max-width: rem(1200); 
-  margin: 0 auto; 
-  
-  display: flex;
-  flex-direction: column;
-  padding-inline: 22px;
+    max-width: rem(1200);
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    padding-inline: rem(22);
 }
 
-.header{
-  margin-top: 18px;
+.header {
+    position: sticky;
+    top: rem(18);
+
+    margin-bottom: rem(40);
+}
+
+.main {
+    flex-grow: 1;
 }

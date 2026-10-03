@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type SyntheticEvent } from "react";
 import { Bell, CircleUser, Menu, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { NavDrawer } from "./NavDrawer";
@@ -6,7 +6,11 @@ import { NavLinks } from "./NavLinks";
 
 import styles from "./Header.module.scss";
 
-export const Header = () => {
+interface Props {
+    className?: string;
+}
+
+export const Header = ({ className }: Props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -25,22 +29,28 @@ export const Header = () => {
             tabletBreakpoint.removeEventListener("change", closeDrawerOnTablet);
     }, [onClose]);
 
+    const handleSearchSubmit = useCallback(
+        (e: SyntheticEvent) => {
+            e.preventDefault();
+            if (!searchQuery.trim()) return;
+
+            //
+        },
+        [searchQuery],
+    );
+
     return (
-        <div className={styles.header}>
-            {!isOpen ?
-                <button
-                    className={styles.menuButton}
-                    onClick={() => setIsOpen(true)}
-                >
-                    <Menu size={24} />
-                </button>
-            :   <button
-                    onClick={onClose}
-                    className={styles.XButton}
-                >
+        <header className={`${styles.header} ${className ?? ""}`.trim()}>
+            <button
+                className={isOpen ? styles.xButton : styles.menuButton}
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+            >
+                {isOpen ?
                     <X size={16} />
-                </button>
-            }
+                :   <Menu size={24} />}
+            </button>
 
             <div className={styles.leftGroup}>
                 <Link
@@ -56,26 +66,38 @@ export const Header = () => {
             </div>
 
             <div className={styles.actionsGroup}>
-                <button className={styles.searchButton}>
+                <button
+                    className={styles.searchButton}
+                    aria-label="Toggle mobile search"
+                >
                     <Search size={22} />
                 </button>
 
-                <div className={styles.searchInputWrapper}>
+                <form
+                    className={styles.searchInputWrapper}
+                    onSubmit={handleSearchSubmit}
+                    role="search"
+                >
                     <input
                         className={styles.searchInput}
                         placeholder="Search movies..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        aria-label="Search movies"
                     />
-                </div>
+                </form>
 
-                <button className={styles.bellButton}>
+                <button
+                    className={styles.bellButton}
+                    aria-label="Notifications"
+                >
                     <Bell size={22} />
                 </button>
 
                 <Link
                     to={"/user"}
                     className={styles.userLink}
+                    aria-label="User profile"
                 >
                     <CircleUser size={22} />
                 </Link>
@@ -84,6 +106,6 @@ export const Header = () => {
                 isOpen={isOpen}
                 onClose={onClose}
             />
-        </div>
+        </header>
     );
 };
