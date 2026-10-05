@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.header {
+    position: sticky;
+    top: rem(18);
+    margin-bottom: rem(40);
+    margin-inline: auto;
+
+    width: calc(100% - rem(44));
+
+    @include respond-to(laptop) {
+        width: calc(100% - rem(40));
+    }
+}
+
+.main {
+    width: 100%;
+    max-width: rem(1200);
+
+    flex-grow: 1;
+
+    margin: 0 auto;
+    padding-inline: rem(22);
+
+    @include respond-to(laptop) {
+        padding-inline: rem(54);
+    }
+}
+
+.footer {
+    margin-block: rem(46) rem(20);
+    padding-inline: rem(40);
+
+    @include respond-to(laptop) {
+        margin-bottom: rem(36);
+        padding-inline: rem(36);
+    }
+}

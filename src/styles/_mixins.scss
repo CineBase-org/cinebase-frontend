@@ -1,0 +1,25 @@
+@use "sass:math";
+@use "sass:map";
+
+$breakpoints: (
+    "tablet": 768px,
+    "laptop": 1024px,
+    "desktop": 1280px,
+    "wide": 1440px,
+);
+
+@mixin respond-to($breakpoint-name) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint-name);
+
+    @if $breakpoint-value {
+        @media (min-width: $breakpoint-value) {
+            @content;
+        }
+    } @else {
+        @error "breakpoint #{$breakpoint-name} not found in $breakpoints";
+    }
+}
+
+@function rem($pixel) {
+    @return math.div($pixel, 16) * 1rem;
+}
