@@ -1,34 +1,53 @@
-name: Debug OIDC claims
+name: Deploy frontend
 
 on:
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
 
+concurrency:
+  group: frontend-production
+  cancel-in-progress: true
+
 permissions:
-  id-token: write
   contents: read
+  id-token: write
 
 jobs:
-  debug-oidc:
+  deploy:
     runs-on: ubuntu-latest
     environment: production
 
     steps:
-      - name: Get OIDC token and show claims
-        uses: actions/github-script@v8
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
         with:
-          script: |
-            const token = await core.getIDToken("sts.amazonaws.com")
+          node-version: 22
+          cache: npm
 
-            const payload = token.split(".")[1]
-            const decoded = JSON.parse(
-              Buffer.from(payload, "base64url").toString("utf8")
-            )
+      - name: Install dependencies
+        run: npm ci
 
-            console.log("iss:", decoded.iss)
-            console.log("aud:", decoded.aud)
-            console.log("sub:", decoded.sub)
-            console.log("repository:", decoded.repository)
-            console.log("repository_id:", decoded.repository_id)
-            console.log("repository_owner:", decoded.repository_owner)
-            console.log("repository_owner_id:", decoded.repository_owner_id)
-            console.log("environment:", decoded.environment)
+      - name: Build frontend
+        run: npm run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync dist/ s3://${{ vars.S3_BUCKET }}/ --delete
+
+      - name: CloudFront invalidation
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
