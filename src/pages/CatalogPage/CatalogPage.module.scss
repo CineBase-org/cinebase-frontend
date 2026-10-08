@@ -1,0 +1,30 @@
+.catalog {
+    display: flex;
+    flex-direction: column;
+}
+
+.featured {
+    margin-bottom: rem(32);
+
+    @include respond-to(desktop) {
+        margin-bottom: rem(40);
+    }
+}
+
+.featuredError {
+    @include text-body;
+    color: $color-gray;
+    margin-bottom: rem(32);
+}
+
+.title {
+    @include text-heading-1;
+}
+
+.filter {
+    margin-top: rem(22);
+
+    @include respond-to(desktop) {
+        margin-top: rem(30);
+    }
+}

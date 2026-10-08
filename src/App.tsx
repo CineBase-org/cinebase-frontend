@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 import { HomePage } from "./pages/HomePage";
+import { CatalogPage } from "./pages/CatalogPage";
 import { MainLayout } from "./layouts/MainLayout";
 
 function App() {
@@ -13,11 +14,11 @@ function App() {
                     index
                     element={<HomePage />}
                 />
-                {/* <Route
+                <Route
                     path="catalog"
                     element={<CatalogPage />}
                 />
-                <Route
+                {/* <Route
                     path="item"
                     element={<MoviePage />}
                 /> */}
