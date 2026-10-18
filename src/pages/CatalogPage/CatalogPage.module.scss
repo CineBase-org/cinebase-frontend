@@ -1,30 +1,142 @@
+
 .catalog {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .featured {
-    margin-bottom: rem(32);
+  margin-bottom: rem(32);
 
-    @include respond-to(desktop) {
-        margin-bottom: rem(40);
-    }
+  @include respond-to(desktop) {
+    margin-bottom: rem(40);
+  }
 }
 
 .featuredError {
-    @include text-body;
-    color: $color-gray;
-    margin-bottom: rem(32);
+  @include text-body;
+  color: $color-gray;
+  margin-bottom: rem(32);
 }
 
 .title {
-    @include text-heading-1;
+  @include text-heading-1;
+}
+
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.featured {
+  margin-bottom: rem(32);
+
+  @include respond-to(desktop) {
+    margin-bottom: rem(40);
+  }
+}
+
+.featuredError {
+  @include text-body;
+  color: $color-gray;
+  margin-bottom: rem(32);
+}
+
+.title {
+  @include text-heading-1;
+}
+
+.catalogControls {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: rem(16);
+  min-width: 0;
+  margin-top: rem(22);
+
+  @include respond-to(desktop) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(16);
+    margin-top: rem(30);
+  }
 }
 
 .filter {
-    margin-top: rem(22);
+  min-width: 0;
+  margin-top: 0;
+}
 
-    @include respond-to(desktop) {
-        margin-top: rem(30);
-    }
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12);
+  width: 100%;
+  margin-left: 0;
+
+  @include respond-to(desktop) {
+    width: auto;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+}
+
+.paginationInfo {
+  @include text-body;
+  color: $color-gray;
+  white-space: nowrap;
+}
+
+.paginationButtons {
+  display: flex;
+  align-items: center;
+  gap: rem(8);
+}
+
+.paginationButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: rem(40);
+  height: rem(40);
+  padding: 0;
+
+  border: 1px solid $color-white;
+  border-radius: 50%;
+  background: transparent;
+  color: $color-white;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $color-bg-surface;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  @include respond-to(desktop) {
+    width: rem(28);
+    height: rem(28);
+  }
+}
+
+.movies {
+  min-width: 0;
+  margin-top: rem(55);
+}
+
+.status {
+  @include text-body;
+  color: $color-gray;
 }

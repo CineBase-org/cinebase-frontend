@@ -4,25 +4,25 @@ import clsx from "clsx";
 import styles from "./FeaturedMovie.module.scss";
 
 interface Props {
-    title: string;
-    description: string;
-    genres: readonly string[];
-    rating: number;
-    trailerUrl?: string | null;
-    backdropUrl?: string | null;
-    onAddToWatchlist?: () => void;
-    className?: string;
+  title: string;
+  description: string;
+  genres: readonly string[];
+  rating: number;
+  trailerUrl?: string | null;
+  backdropUrl?: string | null;
+  onAddToWatchlist?: () => void;
+  className?: string;
 }
 
 export const FeaturedMovie = ({
-    title,
-    description,
-    genres,
-    rating,
-    trailerUrl,
-    backdropUrl,
-    onAddToWatchlist,
-    className,
+  title,
+  description,
+  genres,
+  rating,
+  trailerUrl,
+  backdropUrl,
+  onAddToWatchlist,
+  className,
 }: Props) => {
     return (
         <article

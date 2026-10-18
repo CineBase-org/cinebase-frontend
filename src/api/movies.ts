@@ -12,6 +12,7 @@ export interface MovieListItem {
     release_date: string | null;
     vote_average: number;
     poster_path: string | null;
+    trailer_url: string | null;
 }
 
 export interface MovieCastMember {
