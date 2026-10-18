@@ -20,7 +20,7 @@ export const FilmCard = ({ film }: FilmCardProps) => {
 
         <a
           className={styles.playButton}
-          href={film.trailer_url}
+          href={film.trailer_url ?? undefined}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Watch ${film.title} trailer`}
@@ -38,7 +38,7 @@ export const FilmCard = ({ film }: FilmCardProps) => {
       <div className={styles.filmDetails}>
         <div className={styles.filmMeta}>
           <p className={styles.film__date}>
-            {film.release_date.slice(0, 4)}
+            {film.release_date?.slice(0, 4) ?? ''}
           </p>
 
           <p className={styles.film__genres}>
