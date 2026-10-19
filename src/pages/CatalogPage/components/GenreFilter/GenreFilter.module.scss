@@ -1,0 +1,57 @@
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+
+    gap: rem(10);
+
+    @include respond-to(tablet) {
+        gap: rem(14);
+    }
+}
+
+.item {
+    display: flex;
+}
+
+.chip {
+    @include text-caption;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: rem(34);
+    padding-inline: rem(20);
+
+    background-color: $color-bg-surface;
+    color: $color-gray-thirty;
+    border-radius: rem(18);
+    white-space: nowrap;
+
+    transition:
+        background-color $time-base $ease-out-apple,
+        color $time-base $ease-out-apple,
+        box-shadow $time-base $ease-out-apple;
+
+    &:hover {
+        box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    @include respond-to(desktop) {
+        min-height: rem(40);
+        padding-inline: rem(26);
+        font-size: rem(14);
+    }
+}
+
+.active {
+    background-color: $color-accent;
+    color: $color-white;
+    font-weight: 700;
+
+    &:hover {
+        box-shadow: 0 0 8px 1px rgba($color-accent, 0.6);
+    }
+}

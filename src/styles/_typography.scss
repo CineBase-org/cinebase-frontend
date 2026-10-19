@@ -5,6 +5,18 @@
     font-family: $font-family-headline;
     font-weight: 700;
     font-size: rem(24);
+
+    @include respond-to(tablet) {
+        font-size: rem(28);
+    }
+
+    @include respond-to(desktop) {
+        font-size: rem(32);
+    }
+
+    @include respond-to(wide) {
+        font-size: rem(36);
+    }
 }
 
 @mixin text-caption {
