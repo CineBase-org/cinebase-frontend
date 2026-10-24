@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router";
 import { HomePage } from "./pages/HomePage";
 import { CatalogPage } from "./pages/CatalogPage";
+import { MoviePage } from "./pages/MoviePage";
 import { MainLayout } from "./layouts/MainLayout";
-import { FilmPage } from "./pages/FilmPage";
+
 
 function App() {
     return (
@@ -19,10 +20,10 @@ function App() {
                     path="catalog"
                     element={<CatalogPage />}
                 />
-               <Route
+                <Route
                     path="movie/:id"
-                    element={<FilmPage />}
-                /> 
+                    element={<MoviePage />}
+                />
             </Route>
         </Routes>
     );

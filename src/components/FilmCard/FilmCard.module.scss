@@ -1,238 +1,222 @@
-
 .film {
-  width: 100%;
-  min-width: 0;
-  background-color: $color-bg-surface;
-  font-family: 'Inter', sans-serif;
+    color: $color-film-card-text;
 
-  &__name {
-    margin: 8px 0 0;
-    font-size: 10px;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  &__date {
-    display: none;
-  }
-
-  &__genres {
+    position: relative;
+    width: 100%;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 10px;
-    color: $color-input-text;
-  }
-
-  @include respond-to(desktop) {
-    transform-origin: center top;
-    transition: transform 0.25s ease;
-
-    &:hover {
-      transform: scale(1.05);
-      z-index: 1;
-    }
+    font-family: "Inter", sans-serif;
+    border-radius: rem(8);
 
     &__name {
-      margin: 8px 0 0;
-      font-size: 13px;
+        margin: 8px 0 0;
+        font-size: 10px;
+        font-family: "Montserrat", sans-serif;
     }
 
     &__date {
-      display: block;
-      flex-shrink: 0;
-      font-size: 11px;
+        display: none;
     }
 
     &__genres {
-      font-size: 11px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 10px;
+        color: $color-input-text;
     }
-  }
+
+    @include respond-to(desktop) {
+        transform-origin: center top;
+        transition: transform 0.25s ease;
+
+        &:hover {
+            transform: scale(1.05);
+            z-index: 1;
+        }
+
+        &__name {
+            margin: 8px 0 0;
+            font-size: 13px;
+        }
+
+        &__date {
+            display: block;
+            flex-shrink: 0;
+            font-size: 11px;
+
+            &::after {
+                content: " •";
+            }
+        }
+
+        &__genres {
+            font-size: 11px;
+        }
+    }
 }
 
 .imageWrapper {
-  position: relative;
-  width: 100%;
-  height: 115px;
-  margin: 0 auto;
+    position: relative;
+    width: 100%;
+    height: 115px;
+    margin: 0 auto;
 
-  @include respond-to(desktop) {
-    height: 188px;
-  }
+    @include respond-to(desktop) {
+        height: 188px;
+    }
 }
 
 .image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: rem(8);
 }
 
 .playButton {
-  position: absolute;
-  left: 6px;
-  bottom: 6px;
+    position: absolute;
+    left: 6px;
+    bottom: 6px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 
-  border: 1px solid $color-white;
-  border-radius: 50%;
-  color: $color-white;
-  text-decoration: none;
+    border: 1px solid $color-white;
+    border-radius: 50%;
+    color: $color-white;
+    text-decoration: none;
 
-  opacity: 0;
-  visibility: hidden;
+    opacity: 0;
+    visibility: hidden;
 
-  transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
 
-  @include respond-to(desktop) {
-    display: none;
-  }
+    @include respond-to(desktop) {
+        display: none;
+    }
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .imageWrapper:hover .playButton {
-    opacity: 1;
-    visibility: visible;
-  }
+    .imageWrapper:hover .playButton {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 .filmDetails {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4px;
-  min-width: 0;
-  margin-top: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    min-width: 0;
+    margin-top: 3px;
 
-  p {
-    margin: 0;
-  }
+    p {
+        margin: 0;
+    }
 }
 
 .filmMeta {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .rating {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  flex-shrink: 0;
-  white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+    white-space: nowrap;
 
-  color: $color-gold;
-  font-size: 10px;
+    color: $color-gold;
+    font-size: 10px;
 
-  @include respond-to(desktop) {
-    font-size: 11px;
-  }
+    @include respond-to(desktop) {
+        font-size: 11px;
+    }
 }
 
 .desktopOverlay {
-  display: none;
+    display: none;
 
-  @include respond-to(desktop) {
-    display: block;
-    max-height: 0;
-    margin-top: 0;
-    overflow: hidden;
-    opacity: 0;
+    @include respond-to(desktop) {
+        width: 100%;
+        background-color: $color-bg-base;
+        padding-bottom: rem(12);
+        position: absolute;
+        display: block;
+        max-height: 0;
+        margin-top: 0;
+        overflow: hidden;
+        opacity: 0;
 
-    transition:
-      max-height 0.3s ease,
-      margin-top 0.3s ease,
-      opacity 0.2s ease;
-  }
+        @include text-caption;
+
+        transition:
+            max-height 0.3s ease,
+            margin-top 0.3s ease,
+            opacity 0.2s ease;
+    }
 }
 
 .overlayContent {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
 }
 
 @include respond-to(desktop) {
-  .film:hover .desktopOverlay,
-  .film:focus-within .desktopOverlay {
-    max-height: 70px;
-    margin-top: 8px;
-    opacity: 1;
-  }
-}
-
-.openButton,
-.overlayButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-
-  min-width: 0;
-  padding: 6px 4px;
-
-  border-radius: 6px;
-  font-family: 'Inter', sans-serif;
-  cursor: pointer;
+    .film:hover .desktopOverlay {
+        max-height: 70px;
+        margin-top: 8px;
+        opacity: 1;
+    }
 }
 
 .openButton {
-  width: 100%;
-
-  border: 1px solid $color-accent;
-  background-color: $color-accent;
-  color: $color-white;
-
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-
-  transition: filter 0.2s ease;
-
-  &:hover {
-    filter: brightness(1.1);
-  }
+    font-family: $font-family-headline;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
 .overlayActions {
-  display: flex;
-  gap: 6px;
-  min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+    padding-inline: 2px;
 
-  .overlayButton {
-    flex: 1;
-  }
+    &Text {
+        @include text-caption;
+        font-size: rem(9);
+        color: $color-film-card-text;
+    }
 }
 
-.overlayButton {
-  width: 100%;
+.imageFallback {
+    width: 100%;
+    height: 100%;
+    background-color: $color-input;
+}
 
-  border: 1px solid $color-white;
-  background: transparent;
-  color: $color-white;
+.titleLink {
+    color: inherit;
+    text-decoration: none;
 
-  font-size: 10px;
-  white-space: nowrap;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-
-  &:hover {
-    background-color: $color-white;
-    color: $color-bg-surface;
-  }
+    &:hover {
+        text-decoration: underline;
+    }
 }

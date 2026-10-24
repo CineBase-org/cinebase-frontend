@@ -1,9 +1,13 @@
-import { Play, Plus, Star } from "lucide-react";
+import { useId } from "react";
+import { Check, Play, Plus, Star } from "lucide-react";
 import clsx from "clsx";
+
+import { useWatchlist } from "../../../../contexts/useWatchlist";
 
 import styles from "./FeaturedMovie.module.scss";
 
 interface Props {
+  movieId: number;
   title: string;
   description: string;
   genres: readonly string[];
@@ -15,6 +19,7 @@ interface Props {
 }
 
 export const FeaturedMovie = ({
+  movieId,
   title,
   description,
   genres,
@@ -24,6 +29,14 @@ export const FeaturedMovie = ({
   onAddToWatchlist,
   className,
 }: Props) => {
+    const { movieIds, hasError, toggleMovie } = useWatchlist();
+    const statusId = useId();
+    const isAdded = movieIds.includes(movieId);
+
+    const handleWatchlistToggle = () => {
+        if (toggleMovie(movieId)) onAddToWatchlist?.();
+    };
+
     return (
         <article
             className={clsx(styles.card, className)}
@@ -95,12 +108,42 @@ export const FeaturedMovie = ({
                     </a>
 
                     <button
+                        type="button"
                         className={styles.watchlistButton}
-                        onClick={onAddToWatchlist}
+                        aria-pressed={isAdded}
+                        aria-describedby={
+                            hasError ? statusId : undefined
+                        }
+                        title={
+                            hasError ?
+                                "Could not access the watchlist. Your change was not saved."
+                            :   undefined
+                        }
+                        onClick={handleWatchlistToggle}
                     >
-                        <Plus size={16} />
-                        Watchlist
+                        {isAdded ? <Check size={16} /> : <Plus size={16} />}
+                        {isAdded ? "In Watchlist" : "Watchlist"}
                     </button>
+                    {hasError && (
+                        <span
+                            id={statusId}
+                            role="status"
+                            aria-live="polite"
+                            style={{
+                                position: "absolute",
+                                width: 1,
+                                height: 1,
+                                padding: 0,
+                                margin: -1,
+                                overflow: "hidden",
+                                clip: "rect(0, 0, 0, 0)",
+                                whiteSpace: "nowrap",
+                                border: 0,
+                            }}
+                        >
+                            Could not access the watchlist. Your change was not saved.
+                        </span>
+                    )}
                 </div>
             </div>
         </article>

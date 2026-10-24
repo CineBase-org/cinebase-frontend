@@ -1,0 +1,133 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(8);
+
+    border: 1px solid transparent;
+    border-radius: rem(24);
+
+    font-family: $font-family-base;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        box-shadow $time-base $ease-out-apple,
+        background-color $time-base $ease-out-apple,
+        border-color $time-base $ease-out-apple,
+        color $time-base $ease-out-apple,
+        filter $time-fast $ease-out-apple,
+        transform $time-fast $ease-out-apple,
+        opacity $time-base $ease-out-apple;
+
+    &:focus-visible {
+        outline: 2px solid $color-white;
+        outline-offset: 2px;
+    }
+
+    &:active:not(.disabled):not(:disabled) {
+        transform: scale(0.97);
+        filter: brightness(0.9);
+    }
+
+    &:disabled,
+    &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+.sm {
+    min-height: rem(30);
+    padding-inline: rem(10);
+    gap: rem(4);
+    border-radius: rem(6);
+    font-size: rem(11);
+}
+
+.md {
+    min-height: rem(46);
+    padding-inline: rem(24);
+    font-size: rem(12);
+
+    @include respond-to(tablet) {
+        min-height: rem(36);
+        padding-inline: rem(18);
+        font-size: rem(13);
+    }
+}
+
+.lg {
+    min-height: rem(52);
+    padding-inline: rem(32);
+    font-size: rem(15);
+
+    @include respond-to(desktop) {
+        min-height: rem(56);
+        padding-inline: rem(36);
+        font-size: rem(16);
+    }
+}
+
+.primary {
+    background-color: $color-accent;
+    color: $color-white;
+
+    &:hover {
+        box-shadow: 0 0 12px 2px rgba($color-accent, 0.5);
+    }
+}
+
+.secondary {
+    background-color: $color-input;
+    color: $color-white;
+
+    &:hover {
+        box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    &.active {
+        background-color: $color-white;
+        color: $color-bg-base;
+    }
+}
+
+.outline {
+    border-color: $color-white;
+    background-color: transparent;
+    color: $color-white;
+
+    &:hover {
+        background-color: $color-white;
+        color: $color-bg-surface;
+    }
+
+    &.active {
+        background-color: $color-white;
+        color: $color-bg-surface;
+    }
+}
+
+.text {
+    min-height: 0;
+    padding: 0;
+    border-radius: rem(4);
+    background: transparent;
+    color: $color-gray-thirty;
+    font-size: rem(10);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    &:hover,
+    &.active {
+        color: $color-white;
+    }
+}
+
+.fullWidth {
+    width: 100%;
+}

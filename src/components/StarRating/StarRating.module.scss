@@ -1,0 +1,50 @@
+.stars {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4);
+}
+
+.star {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    color: $color-gray-secondary;
+    line-height: 0;
+
+    svg {
+        display: block;
+    }
+}
+
+.fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    height: 100%;
+
+    color: $color-gold;
+    pointer-events: none;
+}
+
+.interactive {
+    cursor: pointer;
+    transition: transform $time-fast $ease-out-apple;
+
+    &:hover {
+        transform: scale(1.15);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-white;
+        outline-offset: 2px;
+        border-radius: 4px;
+    }
+}

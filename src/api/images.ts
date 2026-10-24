@@ -13,7 +13,12 @@ let configPromise: Promise<ImageConfig> | null = null;
 
 const getImageConfig = () => {
     if (!configPromise) {
-        configPromise = apiFetch<ImageConfig>("/api/config/images/");
+        configPromise = apiFetch<ImageConfig>("/api/config/images/").catch(
+            (error: unknown) => {
+                configPromise = null;
+                throw error;
+            },
+        );
     }
     return configPromise;
 };
