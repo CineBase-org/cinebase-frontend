@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import { HomePage } from "./pages/HomePage";
 import { CatalogPage } from "./pages/CatalogPage";
+import { MoviePage } from "./pages/MoviePage";
 import { MainLayout } from "./layouts/MainLayout";
 
 function App() {
@@ -18,10 +19,10 @@ function App() {
                     path="catalog"
                     element={<CatalogPage />}
                 />
-                {/* <Route
-                    path="item"
+                <Route
+                    path="movie/:id"
                     element={<MoviePage />}
-                /> */}
+                />
             </Route>
         </Routes>
     );

@@ -1,0 +1,189 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "back"
+        "info"
+        "rating"
+        "available";
+    gap: rem(10);
+
+    padding: rem(20);
+    background-color: $color-bg-hero;
+    border-radius: rem(25);
+
+    @include text-body;
+
+    @include respond-to(laptop) {
+        grid-template-columns: minmax(0, 1fr) rem(228);
+        grid-template-areas:
+            "back back"
+            "info rating"
+            "available rating";
+        align-items: start;
+        column-gap: rem(48);
+
+        padding: rem(26) rem(64) rem(32);
+    }
+}
+
+.back {
+    grid-area: back;
+    justify-self: start;
+
+    display: inline-flex;
+    align-items: center;
+    gap: rem(6);
+
+    color: $color-meta;
+    text-decoration: none;
+
+    @include text-body;
+
+    transition: color $time-base $ease-out-apple;
+
+    &:hover {
+        color: $color-white;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-white;
+        outline-offset: 2px;
+        border-radius: rem(4);
+    }
+}
+
+.info {
+    grid-area: info;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(12);
+    min-width: 0;
+}
+
+.rating {
+    grid-area: rating;
+}
+
+.available {
+    grid-area: available;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(5);
+
+    padding-block: rem(3);
+    padding-inline: rem(6);
+
+    background-color: $color-accent;
+    color: $color-white;
+    border-radius: rem(4);
+
+    font-family: $font-family-headline;
+    font-weight: 700;
+    font-size: rem(9);
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: $font-family-headline;
+    font-weight: 700;
+    font-size: rem(18);
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    @include respond-to(tablet) {
+        font-size: rem(24);
+    }
+}
+
+.meta {
+    font-size: rem(11);
+    color: $color-meta;
+}
+
+.score {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(6);
+
+    font-weight: 500;
+    font-size: rem(12);
+    color: $color-gold;
+}
+
+.overview {
+    max-width: rem(640);
+    font-size: rem(11);
+    line-height: 1.6;
+    color: $color-text-soft;
+
+    @include respond-to(tablet) {
+        font-size: rem(12);
+    }
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(8);
+    margin-top: rem(6);
+}
+
+.status {
+    @include text-body;
+    color: $color-gray;
+    font-size: rem(14);
+}
+
+.notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(16);
+}
+
+.skeleton {
+    min-height: rem(420);
+    background-color: $color-bg-hero;
+    border-radius: rem(25);
+
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent
+        );
+
+        animation: shimmer 1.5s infinite;
+    }
+}
+
+
+
+@keyframes shimmer {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
