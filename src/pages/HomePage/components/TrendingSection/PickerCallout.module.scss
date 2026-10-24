@@ -16,12 +16,14 @@
 
 .kicker {
     margin-bottom: rem(6);
+    font-family: $font-family-base;
     font-weight: 700;
     font-size: rem(10);
     color: $color-gold;
 }
 
 .title {
+    font-family: $font-family-base;
     max-width: rem(100);
     font-weight: 500;
     font-size: rem(11);
@@ -39,8 +41,8 @@
     color: $color-bg-surface;
     border-radius: rem(4);
 
-    font-weight: 500;
-    font-size: rem(11);
+    @include text-caption;
+
     text-decoration: none;
 
     transition:
