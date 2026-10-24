@@ -75,6 +75,7 @@ export const CatalogPage = () => {
 
       {!isLoading && movie && (
         <FeaturedMovie
+          movieId={movie.id}
           className={styles.featured}
           title={movie.title}
           description={movie.overview}

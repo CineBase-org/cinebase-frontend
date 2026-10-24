@@ -1,0 +1,45 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+    min-width: 0;
+
+    padding: rem(15);
+    background-color: $color-bg-panel;
+    border-radius: rem(10);
+}
+
+.label {
+    font-weight: 500;
+    font-size: rem(9);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $color-meta;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(8);
+    margin-bottom: rem(14);
+}
+
+.score {
+    flex-shrink: 0;
+    font-weight: 500;
+    font-size: rem(15);
+    color: $color-white;
+    white-space: nowrap;
+}
+
+.feedback {
+    min-height: rem(16);
+    font-weight: 500;
+    font-size: rem(12);
+    color: $color-gold;
+}
+
+.thanks {
+    color: $color-gray-thirty;
+}

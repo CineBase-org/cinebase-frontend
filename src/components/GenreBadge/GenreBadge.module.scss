@@ -1,0 +1,26 @@
+.badge {
+    @include text-caption;
+
+    display: inline-flex;
+    align-items: center;
+
+    min-height: rem(26);
+    padding-inline: rem(12);
+    border-radius: rem(13);
+
+    color: $color-gray-thirty;
+    white-space: nowrap;
+}
+
+.solid {
+    background-color: $color-input;
+}
+
+.outline {
+    border: 1px solid $color-gray-secondary;
+}
+
+.accent {
+    background-color: $color-accent;
+    color: $color-white;
+}
