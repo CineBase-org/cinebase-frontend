@@ -1,0 +1,264 @@
+.card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+
+  width: 100%;
+  min-width: 0;
+  min-height: rem(320);
+
+  @include respond-to(desktop) {
+    min-height: rem(360);
+  }
+
+  @include respond-to(wide) {
+    min-height: rem(420);
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: rem(14);
+
+  width: 100%;
+  min-width: 0;
+
+  margin-bottom: rem(20);
+
+  @include respond-to(desktop) {
+    gap: rem(18);
+    margin-bottom: rem(28);
+  }
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: rem(6);
+
+    background-color: $color-accent;
+    color: $color-white;
+    border-radius: rem(16);
+
+    padding-block: rem(6);
+    padding-inline: rem(14);
+
+    @include text-caption;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: $font-family-headline;
+    font-weight: 700;
+    color: $color-white;
+
+    font-size: rem(22);
+    line-height: 1.2;
+
+    @include respond-to(desktop) {
+        font-size: rem(36);
+    }
+
+    @include respond-to(wide) {
+        font-size: rem(42);
+    }
+}
+
+.description {
+    @include text-body;
+    color: $color-caption;
+    max-width: rem(560);
+    line-height: 1.6;
+
+    @include respond-to(desktop) {
+        font-size: rem(15);
+        max-width: rem(620);
+    }
+
+    @include respond-to(wide) {
+        max-width: rem(680);
+    }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: rem(8);
+
+  white-space: nowrap;
+  overflow-x: auto;
+
+  @include text-body;
+  color: $color-gray-thirty;
+
+  @include respond-to(desktop) {
+    font-size: rem(15);
+    gap: rem(10);
+  }
+}
+
+.options {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: rem(8);
+
+  white-space: nowrap;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+
+  @include text-body;
+  color: $color-gray-thirty;
+
+  @include respond-to(desktop) {
+    font-size: rem(15);
+    gap: rem(10);
+  }
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: rem(8);
+}
+
+.dot {
+    width: rem(4);
+    height: rem(4);
+    border-radius: 100%;
+    background-color: $color-gray-thirty;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    gap: rem(8);
+    width: 100%;
+    min-width: 0;
+    margin-top: rem(6);
+
+    @include respond-to(desktop) {
+        margin-top: rem(10);
+    }
+}
+
+.trailerButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: rem(8);
+
+    background-color: $color-accent;
+    color: $color-white;
+    text-decoration: none;
+    border-radius: rem(24);
+
+    min-height: rem(44);
+    padding-inline: rem(12);
+
+    @include text-body;
+    font-weight: 700;
+
+    @include respond-to(desktop) {
+        min-height: rem(50);
+        padding-inline: rem(30);
+        font-size: rem(15);
+    }
+
+    transition:
+        box-shadow $time-base $ease-out-apple,
+        background-color $time-base $ease-out-apple,
+        opacity $time-base $ease-out-apple;
+
+    &:hover {
+        box-shadow: 0 0 12px 2px rgba($color-accent, 0.5);
+    }
+
+    &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+}
+
+.watchlistButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: rem(8);
+
+    background-color: $color-input;
+    color: $color-white;
+    border-radius: rem(24);
+
+    min-height: rem(44);
+    padding-inline: rem(12);
+
+    @include text-body;
+    font-weight: 700;
+
+    @include respond-to(desktop) {
+        min-height: rem(50);
+        padding-inline: rem(30);
+        font-size: rem(15);
+    }
+
+    transition:
+        box-shadow $time-base $ease-out-apple,
+        background-color $time-base $ease-out-apple;
+
+    &:hover {
+        box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.shareButton {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: rem(8);
+
+    background-color: $color-input;
+    color: $color-white;
+    border-radius: rem(24);
+
+    min-height: rem(44);
+    padding-inline: rem(12);
+
+    @include text-body;
+    font-weight: 700;
+
+    @include respond-to(desktop) {
+        min-height: rem(50);
+        padding-inline: rem(30);
+        font-size: rem(15);
+    }
+
+    transition:
+        box-shadow $time-base $ease-out-apple,
+        background-color $time-base $ease-out-apple;
+
+    &:hover {
+        box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.2);
+    }
+}

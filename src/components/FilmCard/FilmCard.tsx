@@ -2,12 +2,15 @@
 import { Play, Plus, Share2, Star } from 'lucide-react';
 import styles from './FilmCard.module.scss';
 import type { Film } from '../../types/Film';
+import { useNavigate } from 'react-router-dom';
 
 type FilmCardProps = {
   film: Film;
 };
 
 export const FilmCard = ({ film }: FilmCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <article className={styles.film}>
       <div className={styles.imageWrapper}>
@@ -16,6 +19,7 @@ export const FilmCard = ({ film }: FilmCardProps) => {
           src={`https://image.tmdb.org/t/p/w342${film.poster_path}`}
           alt={film.title}
           loading="lazy"
+          onClick={() => navigate(`/movie/${film.id}`)}
         />
 
         <a
@@ -57,6 +61,7 @@ export const FilmCard = ({ film }: FilmCardProps) => {
           <button
             type="button"
             className={styles.openButton}
+            onClick={() => navigate(`/movie/${film.id}`)}
           >
             Open
           </button>

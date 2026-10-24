@@ -1,0 +1,70 @@
+
+.moreLikeMoviesContainer {
+  width: 100%;
+  max-width: rem(600);
+  min-width: 0;
+  padding: rem(16);
+
+  background-color: $color-bg-base;
+  border-radius: rem(12);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12);
+  margin-bottom: rem(16);
+}
+
+.title {
+  margin: 0;
+  color: $color-white;
+  font-family: Montserrat, sans-serif;
+  font-size: rem(18);
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  gap: rem(8);
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(36);
+  height: rem(36);
+  padding: 0;
+  color: $color-white;
+  background-color: $color-bg-surface;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+
+  transition: background-color $time-base $ease-out-apple;
+
+  &:hover {
+    background-color: $color-accent;
+  }
+}
+
+.moviesList {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - rem(36)) / 2);
+  gap: rem(12);
+
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include respond-to(desktop) {
+    grid-auto-columns: calc((100% - rem(36)) / 4);
+  }
+}
