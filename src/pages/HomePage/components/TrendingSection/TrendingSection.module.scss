@@ -1,0 +1,71 @@
+.section {
+    min-width: 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(16);
+    margin-bottom: rem(8);
+}
+
+.title {
+    font-family: $font-family-headline;
+    font-weight: 700;
+    font-size: rem(19);
+
+    @include respond-to(tablet) {
+        font-size: rem(12);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+}
+
+.embla {
+  overflow: hidden;
+  width: 100%;
+
+  list-style: none;
+}
+
+.container {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+.slide {
+    flex: 0 0 rem(132);
+    min-width: 0;
+
+    @include respond-to(tablet) {
+        flex-basis: rem(291);
+    }
+}
+
+.status {
+    @include text-body;
+    color: $color-gray;
+    padding-block: rem(12);
+}
+
+.skeletonCard {
+    height: rem(180);
+    background-color: $color-card;
+    border-radius: rem(8);
+    animation: pulse 1.4s ease-in-out infinite;
+
+    @include respond-to(tablet) {
+        height: rem(119);
+    }
+}
+
+@keyframes pulse {
+    50% {
+        opacity: 0.5;
+    }
+}

@@ -1,0 +1,100 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+    height: 100%;
+    min-width: 0;
+
+    color: inherit;
+    text-decoration: none;
+
+    @include respond-to(tablet) {
+        padding: rem(10);
+        background-color: $color-card;
+        border-radius: rem(8);
+
+        transition: filter $time-base $ease-out-apple;
+
+        &:hover {
+            filter: brightness(1.12);
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-white;
+        outline-offset: 2px;
+    }
+}
+
+.poster {
+    width: 100%;
+    height: rem(147);
+    overflow: hidden;
+    border-radius: rem(8);
+    background-color: $color-input;
+
+    @include respond-to(tablet) {
+        height: rem(75);
+    }
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+}
+
+.info {
+    display: grid;
+    gap: rem(6);
+    min-width: 0;
+    padding-inline: rem(7);
+
+    @include respond-to(tablet) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: rem(8);
+        padding-inline: rem(1);
+    }
+}
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-family: $font-family-base;
+    font-weight: 500;
+    font-size: rem(10);
+
+    @include respond-to(tablet) {
+        font-size: rem(12);
+    }
+}
+
+.genres {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: rem(10);
+    color: $color-gray;
+
+    @include respond-to(tablet) {
+        display: none;
+    }
+}
+
+.rating {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4);
+    flex-shrink: 0;
+
+    font-weight: 500;
+    font-size: rem(12);
+    color: $color-gold;
+}
