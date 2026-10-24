@@ -61,7 +61,7 @@ export const Hero = ({
                         >
                             #
                         </span>
-                        Featured
+                        Trending
                     </span>
                     <p className={styles.metaInline}>{metaInline}</p>
                 </div>

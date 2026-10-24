@@ -88,7 +88,7 @@ export const CatalogPage = () => {
 
       {!isLoading && error && (
         <p className={styles.featuredError}>
-          Couldn't load the featured movie right now.
+          Couldn't load the trending movie right now.
         </p>
       )}
 

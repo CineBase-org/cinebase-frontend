@@ -54,7 +54,7 @@ export const FeaturedMovie = ({
                         size={12}
                         fill="currentColor"
                     />
-                    Featured
+                    Trending
                 </span>
 
                 <h2 className={styles.title}>{title}</h2>
