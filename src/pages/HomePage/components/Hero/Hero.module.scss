@@ -1,0 +1,205 @@
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: rem(20);
+
+    padding: rem(20);
+    background-color: $color-bg-surface;
+    border-radius: rem(25);
+
+    @include respond-to(tablet) {
+        grid-template-columns: minmax(0, 1fr) rem(256);
+        align-items: center;
+        gap: rem(32);
+
+        padding: rem(24) rem(26);
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(14);
+    min-width: 0;
+
+    @include respond-to(tablet) {
+        gap: rem(12);
+    }
+}
+
+.topRow {
+    display: flex;
+    align-items: center;
+    gap: rem(12);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(6);
+
+    padding-block: rem(8);
+    padding-inline: rem(10);
+
+    background-color: $color-accent;
+    color: $color-white;
+    border-radius: rem(4);
+
+    font-family: $font-family-headline;
+    font-weight: 700;
+    font-size: rem(10);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+
+    @include respond-to(tablet) {
+        padding-block: rem(2);
+    }
+}
+
+.badgeStar {
+    @include respond-to(tablet) {
+        display: none;
+    }
+}
+
+.badgeHash {
+    display: none;
+
+    @include respond-to(tablet) {
+        display: inline;
+    }
+}
+
+.metaInline {
+    display: none;
+
+    @include respond-to(tablet) {
+        display: block;
+        font-family: $font-family-base;
+        font-size: rem(12);
+        color: #b0bec5;
+    }
+}
+
+.metaBelow {
+    font-family: $font-family-base;
+    font-weight: 500;
+    font-size: rem(12);
+    color: $color-caption;
+
+    @include respond-to(tablet) {
+        display: none;
+    }
+}
+
+.title {
+    font-family: $font-family-headline;
+    font-weight: 700;
+    font-size: rem(16);
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    @include respond-to(tablet) {
+        font-size: rem(24);
+    }
+}
+
+.titleLink {
+    color: $color-white;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.description {
+    @include text-body;
+    color: #ddd4d5;
+    line-height: 1.5;
+    font-size: rem(10);
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+
+    @include respond-to(tablet) {
+        color: $color-gray;
+        font-size: rem(12);
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+    }
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: rem(12);
+    width: 100%;
+    margin-top: rem(6);
+
+    @include respond-to(tablet) {
+        display: flex;
+        width: auto;
+        gap: rem(11);
+        margin-top: rem(8);
+    }
+}
+
+.image {
+    display: none;
+
+    @include respond-to(tablet) {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: rem(8);
+        background-color: $color-bg-surface;
+    }
+}
+
+.error {
+    @include text-body;
+    color: $color-gray;
+}
+
+.skeleton {
+    min-height: rem(284);
+    background-color: $color-bg-hero-home;
+    border-radius: rem(25);
+
+    position: relative;
+    overflow: hidden;
+
+    @include respond-to(tablet) {
+        min-height: rem(196);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.05),
+            transparent
+        );
+
+        animation: shimmer 1.5s infinite;
+    }
+}
+
+@keyframes shimmer {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}

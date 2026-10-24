@@ -1,0 +1,10 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: rem(40);
+    min-width: 0;
+
+    @include respond-to(desktop) {
+        gap: rem(56);
+    }
+}
