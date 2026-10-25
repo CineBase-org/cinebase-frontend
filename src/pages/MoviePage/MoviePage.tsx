@@ -1,18 +1,22 @@
+
+import { useEffect, useState } from "react";
 import { ArrowLeft, Star } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
 import { AddButton, PlayButton, ShareButton } from "../../components/Button";
 import { formatRuntime, getYear } from "../../utils/movie";
+import { getBackdropUrl } from "../../api/images";
 
 import { AvailableOn, type Platform } from "./components/AvailableOn";
 import { RatingSection } from "./components/RatingSection";
 import { useMovie } from "./hooks/useMovie";
 
 import styles from "./MoviePage.module.scss";
+import { useSimilarMovies } from "../MoviePage/hooks/useSimilarMovies";
+import { MoreLikeMovies } from "./components/MoreLikeMovies";
+import { CastCrewMovie } from "./components/Cast&CrewMovie";
 
-//  replace with real data once the backend exposes streaming providers.
-// To show real logos, put the files into src/assets/platforms and pass them
-// as `logoSrc` (import netflix from "../../assets/platforms/netflix.png").
+// Replace with real data once the backend exposes streaming providers.
 const AVAILABLE_ON: readonly Platform[] = [
     { name: "Netflix", short: "N" },
     { name: "HBO Max", short: "HBO max" },
@@ -21,10 +25,7 @@ const AVAILABLE_ON: readonly Platform[] = [
 ];
 
 const BackLink = () => (
-    <Link
-        to="/catalog"
-        className={styles.back}
-    >
+    <Link to="/catalog" className={styles.back}>
         <ArrowLeft size={12} />
         Back to Catalog
     </Link>
@@ -33,8 +34,32 @@ const BackLink = () => (
 export const MoviePage = () => {
     const { id } = useParams<{ id: string }>();
     const movieId = Number(id);
+    
 
     const { movie, isLoading, error } = useMovie(movieId);
+    const similarMovies = useSimilarMovies(movie);
+
+    const [backdropUrl, setBackdropUrl] = useState<string | null>(null);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        const loadBackdrop = async () => {
+            const url = await getBackdropUrl(
+                movie?.backdrop_path ?? null,
+            );
+
+            if (!cancelled) {
+                setBackdropUrl(url);
+            }
+        };
+
+        loadBackdrop();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [movie?.backdrop_path]);
 
     if (isLoading) {
         return (
@@ -50,9 +75,9 @@ export const MoviePage = () => {
         return (
             <div className={styles.notFound}>
                 <p className={styles.status}>
-                    {error === "failed" ?
-                        "Couldn't load this movie right now."
-                    :   "We couldn't find this movie."}
+                    {error === "failed"
+                        ? "Couldn't load this movie right now."
+                        : "We couldn't find this movie."}
                 </p>
                 <BackLink />
             </div>
@@ -69,7 +94,14 @@ export const MoviePage = () => {
 
     return (
         <article className={styles.page}>
-            <section className={styles.hero}>
+            <section
+                className={styles.hero}
+                style={
+                    backdropUrl
+                        ? { backgroundImage: `url("${backdropUrl}")` }
+                        : undefined
+                }
+            >
                 <BackLink />
 
                 <div className={styles.info}>
@@ -87,7 +119,9 @@ export const MoviePage = () => {
                     {meta && <p className={styles.meta}>{meta}</p>}
 
                     {movie.overview && (
-                        <p className={styles.overview}>{movie.overview}</p>
+                        <p className={styles.overview}>
+                            {movie.overview}
+                        </p>
                     )}
 
                     <div className={styles.actions}>
@@ -96,12 +130,14 @@ export const MoviePage = () => {
                             label="Watch Trailer"
                             className={styles.button}
                         />
+
                         <AddButton
                             movieId={movie.id}
                             label="Add to Watchlist"
                             addedLabel="In Watchlist"
                             className={styles.button}
                         />
+
                         <ShareButton title={movie.title} />
                     </div>
                 </div>
@@ -119,6 +155,15 @@ export const MoviePage = () => {
                     platforms={AVAILABLE_ON}
                 />
             </section>
+
+            <section className={styles.castCrew}>
+              <CastCrewMovie casts={movie.cast} />
+            </section>
+
+            <section className={styles.moreLikeThis}>
+              <MoreLikeMovies movies={similarMovies}/>
+            </section>
+
         </article>
     );
 };

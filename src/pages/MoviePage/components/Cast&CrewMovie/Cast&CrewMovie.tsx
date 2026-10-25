@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { MovieCastMember } from '../../../../api/movies';

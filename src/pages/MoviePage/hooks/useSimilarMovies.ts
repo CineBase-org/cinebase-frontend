@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import {
   getMovies,
@@ -15,16 +16,13 @@ export const useSimilarMovies = (movie: MovieDetail | null) => {
 
     let isCancelled = false;
 
+    
     const loadSimilarMovies = async () => {
       try {
         const firstPage = await getMovies({ page: 1 });
         const pageSize = firstPage.results.length;
 
         if (pageSize === 0) {
-          if (!isCancelled) {
-            setMovies([]);
-          }
-
           return;
         }
 
@@ -55,6 +53,7 @@ export const useSimilarMovies = (movie: MovieDetail | null) => {
         }
       }
     };
+
 
     loadSimilarMovies();
 
