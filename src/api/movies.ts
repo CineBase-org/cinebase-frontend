@@ -23,6 +23,12 @@ export interface MovieCastMember {
     order: number;
 }
 
+export interface StreamingPlatform {
+  id: number;
+  name: string;
+  logo_url: string;
+}
+
 export interface MovieDetail {
     id: number;
     title: string;
@@ -37,6 +43,7 @@ export interface MovieDetail {
     average_rating: number;
     ratings_count: number;
     trailer_url: string | null;
+    streaming_platforms: StreamingPlatform[];
 }
 
 interface PaginatedResponse<T> {

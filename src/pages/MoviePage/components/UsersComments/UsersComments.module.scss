@@ -1,0 +1,212 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+    font-family: $font-family-base;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $color-white;
+    margin: 0;
+}
+
+
+.formContainer {
+    background-color: $color-bg-surface;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.authPrompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    color: $color-caption;
+    padding: 20px 0;
+
+    p {
+        margin: 0;
+    }
+
+    .loginLink {
+        background-color: $color-accent;
+        color: $color-white;
+        padding: 10px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color $time-fast $ease-out-apple;
+
+        &:hover {
+            background-color: darken(#e50914, 10%);
+        }
+        
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+}
+
+.commentForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background-color: $color-input;
+        border-radius: 50%;
+        color: $color-icon;
+    }
+
+    .userName {
+        font-weight: 600;
+        color: $color-white;
+    }
+}
+
+.textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid $color-input;
+    background-color: $color-bg-base;
+    color: $color-white;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color $time-fast $ease-out-apple;
+
+    &:focus {
+        outline: none;
+        border-color: $color-accent;
+    }
+
+    &::placeholder {
+        color: $color-caption;
+    }
+    
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+
+    .submitBtn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: $color-accent;
+        color: $color-white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all $time-fast $ease-out-apple;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &:not(:disabled):hover {
+            background-color: darken(#e50914, 10%);
+        }
+        
+        &:not(:disabled):active {
+            transform: scale(0.98);
+        }
+    }
+}
+
+
+.commentsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.status, .error, .empty {
+    text-align: center;
+    padding: 20px 0;
+    color: $color-caption;
+    margin: 0;
+}
+
+.error {
+    color: $color-accent;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.commentItem {
+    background-color: $color-bg-base;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid $color-input;
+}
+
+.commentHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+
+    .avatarSmall {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background-color: $color-input;
+        border-radius: 50%;
+        color: $color-icon;
+    }
+
+    .commentAuthor {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: $color-white;
+    }
+
+    .commentDate {
+        font-size: 0.8rem;
+        color: $color-caption;
+        margin-left: auto;
+    }
+}
+
+.commentText {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: $color-white;
+    white-space: pre-wrap;
+}

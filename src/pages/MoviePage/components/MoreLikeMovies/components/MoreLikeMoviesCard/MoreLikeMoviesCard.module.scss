@@ -1,0 +1,60 @@
+
+.movieCard {
+  min-width: 0;
+  overflow: hidden;
+  background-color: $color-input;
+  border-radius: rem(10);
+  cursor: pointer;
+
+  transition: transform $time-base $ease-out-apple;
+
+  &:hover {
+    transform: translateY(rem(-3));
+  }
+}
+
+.poster {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background-color: $color-bg-surface;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: rem(4);
+  padding: rem(8);
+}
+
+.title {
+  margin: 0;
+  overflow: hidden;
+  color: $color-white;
+  font-size: rem(13);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  margin: 0;
+  overflow: hidden;
+  color: $color-caption;
+  font-size: rem(10);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: rem(4);
+  color: $color-white;
+  font-size: rem(11);
+
+  svg {
+    color: $color-white;
+  }
+}
