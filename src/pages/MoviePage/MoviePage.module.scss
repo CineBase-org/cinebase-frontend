@@ -198,3 +198,39 @@
         transform: translateX(100%);
     }
 }
+
+.contentLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "cast"
+        "more"
+        "comments";
+    gap: rem(30);
+    min-width: 0;
+
+    @include respond-to(laptop) {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        grid-template-areas:
+            "cast comments"
+            "more comments";
+        align-items: stretch;
+        column-gap: rem(24);
+        row-gap: rem(30);
+    }
+}
+
+.castCrew {
+    grid-area: cast;
+    min-width: 0;
+}
+
+.moreLikeThis {
+    grid-area: more;
+    min-width: 0;
+}
+
+.usersComments {
+    grid-area: comments;
+    min-width: 0;
+}

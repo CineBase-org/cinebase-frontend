@@ -1,0 +1,246 @@
+.userPageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 80px);
+    padding: 40px 20px;
+    font-family: $font-family-base;
+    color: $color-white;
+}
+
+.loader {
+    text-align: center;
+    margin-top: 100px;
+    color: $color-caption;
+    font-size: 1.2rem;
+}
+
+.profileCard {
+    width: 100%;
+    max-width: 500px;
+    background-color: $color-bg-surface;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+    border-bottom: 1px solid $color-input;
+    padding-bottom: 24px;
+
+    .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 96px;
+        height: 96px;
+        background-color: $color-input;
+        border-radius: 50%;
+        margin-bottom: 16px;
+        color: $color-icon;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        font-family: $font-family-headline;
+        margin: 0;
+        text-align: center;
+    }
+}
+
+.infoList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.infoItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background-color: $color-bg-base;
+    padding: 16px;
+    border-radius: 12px;
+
+    .icon {
+        color: $color-accent;
+        margin-top: 2px;
+    }
+
+    .label {
+        display: block;
+        font-size: 0.875rem;
+        color: $color-caption;
+        margin-bottom: 4px;
+    }
+
+    p {
+        margin: 0;
+        font-size: 1rem;
+        color: $color-white;
+        line-height: 1.4;
+    }
+}
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: $color-accent;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid $color-accent;
+    transition: background-color $time-fast $ease-out-apple, color $time-fast $ease-out-apple;
+
+    &:hover {
+        background-color: $color-accent;
+        color: $color-white;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+.editIconBtn {
+    margin-top: 12px;
+    background: transparent;
+    border: none;
+    color: $color-gray;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color $time-fast $ease-out-apple, color $time-fast $ease-out-apple;
+
+    &:hover {
+        background-color: $color-input;
+        color: $color-white;
+    }
+}
+
+.error {
+    background-color: rgba(229, 9, 20, 0.1);
+    color: $color-accent;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+    text-align: center;
+    border: 1px solid rgba(229, 9, 20, 0.3);
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+    
+    .inputGroup {
+        flex: 1;
+    }
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    
+    label {
+        margin-bottom: 6px;
+        font-size: 0.875rem;
+        color: $color-caption;
+    }
+    
+    input, textarea {
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid $color-icon;
+        background-color: $color-input;
+        color: $color-white;
+        font-size: 1rem;
+        font-family: $font-family-base;
+        transition: border-color $time-fast $ease-out-apple;
+        
+        &::placeholder {
+            color: $color-input-text;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $color-accent;
+        }
+    }
+    
+    textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+}
+
+.formActions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    
+    button {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all $time-fast $ease-out-apple;
+        
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        &:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+    }
+    
+    .cancelBtn {
+        background-color: transparent;
+        color: $color-white;
+        border: 1px solid $color-icon;
+        
+        &:hover:not(:disabled) {
+            background-color: $color-input;
+        }
+    }
+    
+    .saveBtn {
+        background-color: $color-accent;
+        color: $color-white;
+        border: 1px solid transparent;
+        
+        &:hover:not(:disabled) {
+            background-color: darken(#e50914, 10%);
+        }
+    }
+}

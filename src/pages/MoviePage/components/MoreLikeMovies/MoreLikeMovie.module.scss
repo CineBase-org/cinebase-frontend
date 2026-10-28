@@ -1,4 +1,3 @@
-
 .moreLikeMoviesContainer {
   width: 100%;
   max-width: rem(600);
@@ -53,7 +52,7 @@
 .moviesList {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100% - rem(36)) / 4);
+  grid-auto-columns: calc((100% - rem(12)) / 2);
   gap: rem(12);
 
   min-width: 0;

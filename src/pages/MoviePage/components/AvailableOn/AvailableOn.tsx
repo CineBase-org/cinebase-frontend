@@ -1,13 +1,10 @@
 import clsx from "clsx";
 
 import styles from "./AvailableOn.module.scss";
-
 export interface Platform {
+    id: number;
     name: string;
-    /** Short text shown while no logo file is set. */
-    short: string;
-    /** Logo image (import it from src/assets/platforms). */
-    logoSrc?: string;
+    logo_url: string;
 }
 
 interface Props {
@@ -32,19 +29,21 @@ export const AvailableOn = ({ platforms, className }: Props) => {
 
             <ul className={styles.list}>
                 {platforms.map((platform) => (
-                    <li key={platform.name}>
+                    <li key={platform.id}>
                         <div
                             className={styles.logo}
                             title={platform.name}
                             role="img"
                             aria-label={platform.name}
                         >
-                            {platform.logoSrc ?
+                            {platform.logo_url ? (
                                 <img
-                                    src={platform.logoSrc}
-                                    alt=""
+                                    src={platform.logo_url}
+                                    alt={platform.name} 
                                 />
-                            :   platform.short}
+                            ) : (
+                                <span>{platform.name.charAt(0)}</span>
+                            )}
                         </div>
                     </li>
                 ))}

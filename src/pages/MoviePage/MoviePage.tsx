@@ -7,7 +7,7 @@ import { AddButton, PlayButton, ShareButton } from "../../components/Button";
 import { formatRuntime, getYear } from "../../utils/movie";
 import { getBackdropUrl } from "../../api/images";
 
-import { AvailableOn, type Platform } from "./components/AvailableOn";
+import { AvailableOn } from "./components/AvailableOn";
 import { RatingSection } from "./components/RatingSection";
 import { useMovie } from "./hooks/useMovie";
 
@@ -15,14 +15,7 @@ import styles from "./MoviePage.module.scss";
 import { useSimilarMovies } from "../MoviePage/hooks/useSimilarMovies";
 import { MoreLikeMovies } from "./components/MoreLikeMovies";
 import { CastCrewMovie } from "./components/Cast&CrewMovie";
-
-// Replace with real data once the backend exposes streaming providers.
-const AVAILABLE_ON: readonly Platform[] = [
-    { name: "Netflix", short: "N" },
-    { name: "HBO Max", short: "HBO max" },
-    { name: "Prime Video", short: "prime video" },
-    { name: "Apple TV+", short: "tv+" },
-];
+import { UsersComments } from "./components/UsersComments";
 
 const BackLink = () => (
     <Link to="/catalog" className={styles.back}>
@@ -150,19 +143,27 @@ export const MoviePage = () => {
                     ratingsCount={movie.ratings_count}
                 />
 
-                <AvailableOn
+                {movie.streaming_platforms && movie.streaming_platforms.length > 0 && (
+                  <AvailableOn
                     className={styles.available}
-                    platforms={AVAILABLE_ON}
+                    platforms={movie.streaming_platforms}
                 />
+                )}
             </section>
 
-            <section className={styles.castCrew}>
-              <CastCrewMovie casts={movie.cast} />
-            </section>
+            <div className={styles.contentLayout}>
+              <section className={styles.castCrew}>
+                <CastCrewMovie casts={movie.cast} />
+              </section>
 
-            <section className={styles.moreLikeThis}>
-              <MoreLikeMovies movies={similarMovies}/>
-            </section>
+              <section className={styles.moreLikeThis}>
+                <MoreLikeMovies movies={similarMovies}/>
+              </section>
+
+              <section className={styles.usersComments}>
+                <UsersComments movieId={movie.id}/>
+              </section>
+            </div>
 
         </article>
     );

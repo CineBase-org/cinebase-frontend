@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './MoreLikeMovie.module.scss';
 import { useRef } from 'react';
 import type { MovieListItem } from '../../../../api/movies';
-import { MoreLikeMoviesCard } from './components/MoreLIkeMoviesCard';
+import { MoreLikeMoviesCard } from './components/MoreLikeMoviesCard'; 
 
 type Props = {
   movies: MovieListItem[];
@@ -11,6 +11,8 @@ type Props = {
 
 export const MoreLikeMovies = ({ movies }: Props) => {
   const moviesListRef = useRef<HTMLDivElement>(null);
+
+  if (!movies || movies.length === 0) return null;
 
   const scrollMovies = (direction: number) => {
     moviesListRef.current?.scrollBy({
@@ -27,7 +29,7 @@ export const MoreLikeMovies = ({ movies }: Props) => {
           <button
             type="button"
             className={styles.arrow}
-            aria-label="Previous actors"
+            aria-label="Previous movies"
             onClick={() => scrollMovies(-1)}
           >
             <ChevronLeft size={20} />
@@ -36,7 +38,7 @@ export const MoreLikeMovies = ({ movies }: Props) => {
           <button
             type="button"
             className={styles.arrow}
-            aria-label="Next actors"
+            aria-label="Next movies"
             onClick={() => scrollMovies(1)}
           >
             <ChevronRight size={20} />
