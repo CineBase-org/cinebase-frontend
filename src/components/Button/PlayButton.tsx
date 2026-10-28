@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { Play } from "lucide-react";
-import { LinkButton } from "./LinkButton";
+import { Button } from "./Button"; 
 import type { ButtonStyleProps } from "./buttonClasses";
 
+import { getYouTubeEmbedUrl } from "../../utils/movie"; 
+import { TrailerModal } from "../TrailerModal";
+
 interface Props extends Omit<ButtonStyleProps, "isActive" | "disabled"> {
-    /** Trailer URL from the API. Button is disabled when it is missing. */
     trailerUrl?: string | null;
     label?: string;
+    className?: string;
 }
 
 export const PlayButton = ({
@@ -15,21 +19,34 @@ export const PlayButton = ({
     size,
     ...rest
 }: Props) => {
+    const [isOpen, setIsOpen] = useState(false);
+    
+    const embedUrl = getYouTubeEmbedUrl(trailerUrl);
+
     return (
-        <LinkButton
-            href={trailerUrl ?? undefined}
-            disabled={!trailerUrl}
-            variant={variant}
-            size={size}
-            icon={
-                <Play
-                    size={size === "sm" ? 12 : 14}
-                    fill="currentColor"
+        <>
+            <Button
+                onClick={() => setIsOpen(true)}
+                disabled={!embedUrl}
+                variant={variant}
+                size={size}
+                icon={
+                    <Play
+                        size={size === "sm" ? 12 : 14}
+                        fill="currentColor"
+                    />
+                }
+                {...rest}
+            >
+                {label}
+            </Button>
+
+            {isOpen && embedUrl && (
+                <TrailerModal
+                    embedUrl={embedUrl}
+                    onClose={() => setIsOpen(false)}
                 />
-            }
-            {...rest}
-        >
-            {label}
-        </LinkButton>
+            )}
+        </>
     );
 };
