@@ -5,7 +5,8 @@ import { useState, type FormEvent } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getComments, postComment } from '../../../../api/comments';
 import { Link, useLocation } from 'react-router-dom';
-import { Send, UserIcon } from 'lucide-react';
+import { Send } from 'lucide-react';
+import { UserAvatar } from '../../../../components/UserAvatar';
 
 interface Props {
   movieId: number;
@@ -62,9 +63,11 @@ export const UsersComments = ({ movieId, className }: Props) => {
         ) : (
           <form onSubmit={handleSubmit} className={styles.commentForm}>
             <div className={styles.userInfo}>
-              <div className={styles.avatar}>
-                <UserIcon size={20} />
-              </div>
+              
+              <UserAvatar 
+                avatarUrl={user?.avatar} 
+                className={styles.userCommentAvatar} 
+              />
 
               <span className={styles.userName}>
                 {user?.first_name || user?.last_name
@@ -111,9 +114,12 @@ export const UsersComments = ({ movieId, className }: Props) => {
             {commentsList.map((comment) =>(
               <li key={comment.id} className={styles.commentItem}>
                 <div className={styles.commentHeader}>
-                  <div className={styles.avatarSmall}>
-                    <UserIcon size={16} />
-                  </div>
+                  
+                  <UserAvatar 
+                    avatarUrl={comment.avatar} 
+                    className={styles.commentAuthorAvatar} 
+                  />
+
                   <span className={styles.commentAuthor}>
                     {comment.author || "Anonymous"}
                   </span>

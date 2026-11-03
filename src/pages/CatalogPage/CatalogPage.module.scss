@@ -3,6 +3,12 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+
+  padding-bottom: rem(40);
+
+  @include respond-to(desktop) {
+    padding-bottom: rem(75); 
+  }
 }
 
 .featured {

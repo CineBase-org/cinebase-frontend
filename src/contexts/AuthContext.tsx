@@ -7,6 +7,7 @@ export interface User {
   bio: string;
   location: string;
   birth_date: string;
+  avatar: string | null;
 }
 
 export interface AuthTokens {
@@ -48,7 +49,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     };
 
     restoreSession();
-  })
+  }, [])
 
   const login = (userData: User, tokens: AuthTokens) => {
     setUser(userData);

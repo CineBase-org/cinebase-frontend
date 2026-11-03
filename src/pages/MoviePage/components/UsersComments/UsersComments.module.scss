@@ -13,7 +13,6 @@
     margin: 0;
 }
 
-
 .formContainer {
     background-color: $color-bg-surface;
     border-radius: 12px;
@@ -62,17 +61,6 @@
     display: flex;
     align-items: center;
     gap: 12px;
-
-    .avatar {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        background-color: $color-input;
-        border-radius: 50%;
-        color: $color-icon;
-    }
 
     .userName {
         font-weight: 600;
@@ -140,7 +128,6 @@
     }
 }
 
-
 .commentsList {
     display: flex;
     flex-direction: column;
@@ -179,17 +166,6 @@
     gap: 10px;
     margin-bottom: 12px;
 
-    .avatarSmall {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        background-color: $color-input;
-        border-radius: 50%;
-        color: $color-icon;
-    }
-
     .commentAuthor {
         font-weight: 600;
         font-size: 0.9rem;
@@ -209,4 +185,14 @@
     line-height: 1.5;
     color: $color-white;
     white-space: pre-wrap;
+}
+
+.userCommentAvatar {
+    width: rem(36);
+    height: rem(36);
+}
+
+.commentAuthorAvatar {
+    width: rem(32);
+    height: rem(32);
 }
