@@ -1,0 +1,58 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    padding: rem(20);
+}
+
+.modal {
+    position: relative;
+    width: 100%;
+    max-width: rem(900);
+    background-color: $color-bg-base;
+    border-radius: rem(16);
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.closeBtn {
+    position: absolute;
+    top: rem(12);
+    right: rem(12);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(36);
+    height: rem(36);
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    color: $color-white;
+    cursor: pointer;
+    transition: background-color $time-fast $ease-out-apple;
+
+    &:hover {
+        background-color: $color-accent;
+    }
+}
+
+.iframeWrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; // Співвідношення сторін 16:9
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+}

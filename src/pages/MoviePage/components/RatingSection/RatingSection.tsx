@@ -5,6 +5,8 @@ import { StarRating } from "../../../../components/StarRating";
 import { useUserRating } from "../../hooks/useUserRating";
 
 import styles from "./RatingSection.module.scss";
+import { useAuth } from "../../../../contexts/AuthContext";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LABELS = ["Terrible", "Poor", "Okay", "Good", "Great"] as const;
 
@@ -24,6 +26,10 @@ export const RatingSection = ({
     ratingsCount,
     className,
 }: Props) => {
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const { rating: userRating, setRating } = useUserRating(movieId);
     const [hovered, setHovered] = useState<number | null>(null);
 
@@ -35,6 +41,15 @@ export const RatingSection = ({
         :   averageRating;
 
     const feedbackValue = hovered ?? userRating;
+
+    const handleRatingChange = (newRating: number) => {
+      if (!isAuthenticated) {
+        navigate("/login", { state: {from: location.pathname }});
+        return;
+      }
+
+      setRating(newRating);
+    }
 
     return (
         <section
@@ -56,7 +71,7 @@ export const RatingSection = ({
             <StarRating
                 value={userRating ?? 0}
                 size={26}
-                onChange={setRating}
+                onChange={handleRatingChange}
                 onHover={setHovered}
             />
 

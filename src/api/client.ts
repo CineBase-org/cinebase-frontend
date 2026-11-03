@@ -1,7 +1,3 @@
-// In dev this stays relative so requests go through the Vite proxy
-// configured in vite.config.ts (the backend doesn't send CORS headers).
-// In prod, point VITE_API_URL at a same-origin reverse proxy or a backend
-// that allows cross-origin requests.
 const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
 export class ApiError extends Error {
@@ -18,13 +14,28 @@ export const apiFetch = async <T>(
     path: string,
     init?: RequestInit,
 ): Promise<T> => {
+    const accessToken = localStorage.getItem("access_token");
+
+    const headers = new Headers(init?.headers);
+    headers.set("Accept", "application/json");
+
+    if (init?.body && typeof init.body === "string" && !headers.has("Content-Type")) {
+        headers.set("Content-Type", "application/json");
+    }
+    if (accessToken) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
+    }
+
     const response = await fetch(`${API_BASE_URL}${path}`, {
-        headers: {
-            Accept: "application/json",
-            ...init?.headers,
-        },
         ...init,
+        headers,
     });
+
+    if (response.status === 401) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        throw new ApiError(401, "Unauthorized");
+    }
 
     if (!response.ok) {
         throw new ApiError(
@@ -33,5 +44,6 @@ export const apiFetch = async <T>(
         );
     }
 
-    return (await response.json()) as T;
+    const text = await response.text();
+    return text ? (JSON.parse(text) as T) : ({} as T);
 };

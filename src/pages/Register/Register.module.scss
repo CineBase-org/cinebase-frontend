@@ -1,0 +1,116 @@
+.registerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+    font-family: $font-family-base;
+    color: $color-white;
+
+    h1 {
+        margin-bottom: 32px;
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        font-family: $font-family-headline;
+
+        .accentText {
+            color: $color-accent;
+        }
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    background-color: $color-bg-surface;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.error {
+    background-color: rgba(229, 9, 20, 0.1);
+    color: $color-accent;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.875rem;
+    text-align: center;
+    border: 1px solid rgba(229, 9, 20, 0.3);
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    label {
+        margin-bottom: 8px;
+        font-size: 0.875rem;
+        color: $color-caption;
+    }
+
+    input {
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid $color-icon;
+        background-color: $color-input;
+        color: $color-white;
+        font-size: 1rem;
+        transition: border-color $time-fast $ease-out-apple;
+
+        &:focus {
+            outline: none;
+            border-color: $color-accent;
+        }
+    }
+}
+
+.form button {
+    margin-top: 12px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: $color-accent;
+    color: $color-white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: $font-family-base;
+    transition: background-color $time-fast $ease-out-apple, transform $time-fast $ease-out-apple;
+
+    &:hover:not(:disabled) {
+        background-color: darken(#e50914, 10%);
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.98);
+    }
+
+    &:disabled {
+        background-color: $color-gray;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+}
+
+.footerText {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 0.875rem;
+    color: $color-caption;
+
+    .link {
+        color: $color-accent;
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

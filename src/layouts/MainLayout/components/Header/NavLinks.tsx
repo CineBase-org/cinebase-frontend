@@ -39,6 +39,15 @@ export const NavLinks = ({ onItemClick }: NavLinksProps) => {
                     % Movie Picker ✨
                 </NavLink>
             </li>
+            <li className={styles.item}>
+                <NavLink
+                    className={activeCallback}
+                    to={"/watchlist"}
+                    onClick={onItemClick}
+                >
+                  WatchList
+                </NavLink>
+            </li>
         </ol>
     );
 };

@@ -1,45 +1,24 @@
-import { useEffect, useState } from "react";
-import { getRandomMovie, type MovieDetail } from "../../../api/movies";
+import { useQuery } from "@tanstack/react-query";
+import { getRandomMovie } from "../../../api/movies";
 import { getBackdropUrl } from "../../../api/images";
 
-interface State {
-    movie: MovieDetail | null;
-    backdropUrl: string | null;
-    isLoading: boolean;
-    error: boolean;
-}
-
 export const useFeaturedMovie = () => {
-    const [state, setState] = useState<State>({
-        movie: null,
-        backdropUrl: null,
-        isLoading: true,
-        error: false,
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ["featuredMovie"],
+        
+        queryFn: async () => {
+            const movie = await getRandomMovie();
+            const backdropUrl = await getBackdropUrl(movie.backdrop_path);
+            
+            return { movie, backdropUrl };
+        },
+        staleTime: Infinity, 
     });
 
-    useEffect(() => {
-        let isCancelled = false;
-
-        getRandomMovie()
-            .then(async (movie) => {
-                const backdropUrl = await getBackdropUrl(movie.backdrop_path);
-                if (!isCancelled)
-                    setState({ movie, backdropUrl, isLoading: false, error: false });
-            })
-            .catch(() => {
-                if (!isCancelled)
-                    setState({
-                        movie: null,
-                        backdropUrl: null,
-                        isLoading: false,
-                        error: true,
-                    });
-            });
-
-        return () => {
-            isCancelled = true;
-        };
-    }, []);
-
-    return state;
+    return {
+        movie: data?.movie ?? null,
+        backdropUrl: data?.backdropUrl ?? null,
+        isLoading,
+        error: isError,
+    };
 };

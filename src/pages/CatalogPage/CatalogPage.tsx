@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -26,6 +25,7 @@ const GENRES = [
 export const CatalogPage = () => {
   const [activeGenre, setActiveGenre] = useState<string>("All");
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
 
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
 
@@ -44,7 +44,7 @@ export const CatalogPage = () => {
     isLoading: isFilmsLoading,
     error: filmError,
     totalCount,
-  } = useFilms(page, activeGenreId);
+  } = useFilms(page, activeGenreId, searchQuery);
 
   const filmsPerPage = 14;
   const totalPages = Math.ceil(totalCount / filmsPerPage);
@@ -92,7 +92,9 @@ export const CatalogPage = () => {
         </p>
       )}
 
-      <h1 className={styles.title}>All Movies &amp; TV Shows</h1>
+      <h1 className={styles.title}>
+        {searchQuery ? `Search results for "${searchQuery}"` : "All Movies & TV Shows"}
+      </h1>
 
       <div className={styles.catalogControls}>
         <GenreFilter

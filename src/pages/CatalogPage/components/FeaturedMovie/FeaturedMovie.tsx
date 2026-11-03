@@ -1,10 +1,12 @@
-import { useId } from "react";
+import { useId, useState } from "react";
 import { Check, Play, Plus, Star } from "lucide-react";
 import clsx from "clsx";
 
 import { useWatchlist } from "../../../../contexts/useWatchlist";
 
 import styles from "./FeaturedMovie.module.scss";
+import { getYouTubeEmbedUrl } from "../../../../utils/movie";
+import { TrailerModal } from "../../../../components/TrailerModal";
 
 interface Props {
   movieId: number;
@@ -32,6 +34,9 @@ export const FeaturedMovie = ({
     const { movieIds, hasError, toggleMovie } = useWatchlist();
     const statusId = useId();
     const isAdded = movieIds.includes(movieId);
+
+    const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+    const embedUrl = getYouTubeEmbedUrl(trailerUrl);
 
     const handleWatchlistToggle = () => {
         if (toggleMovie(movieId)) onAddToWatchlist?.();
@@ -87,25 +92,21 @@ export const FeaturedMovie = ({
                 </div>
 
                 <div className={styles.actions}>
-                    <a
+                    <button
+                        type="button"
                         className={clsx(
                             styles.trailerButton,
-                            !trailerUrl && styles.disabled,
+                            !embedUrl && styles.disabled,
                         )}
-                        href={trailerUrl ?? undefined}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-disabled={!trailerUrl}
-                        onClick={(e) => {
-                            if (!trailerUrl) e.preventDefault();
-                        }}
+                        disabled={!embedUrl}
+                        onClick={() => setIsTrailerOpen(true)}
                     >
                         <Play
                             size={16}
                             fill="currentColor"
                         />
                         Watch Trailer
-                    </a>
+                    </button>
 
                     <button
                         type="button"
@@ -146,6 +147,12 @@ export const FeaturedMovie = ({
                     )}
                 </div>
             </div>
+            {isTrailerOpen && embedUrl && (
+              <TrailerModal
+                embedUrl={embedUrl}
+                onClose={() => setIsTrailerOpen(false)}
+              />
+            )}
         </article>
     );
 };

@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState, type SyntheticEvent } from "react";
-import { Bell, CircleUser, Menu, Search, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { Bell, CircleUser, LogIn, Menu, Search, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import clsx from "clsx";
 import { NavDrawer } from "./NavDrawer";
 import { NavLinks } from "./NavLinks";
 
 import styles from "./Header.module.scss";
+import { useAuth } from "../../../../contexts/AuthContext";
 
 interface Props {
     className?: string;
@@ -14,6 +16,12 @@ export const Header = ({ className }: Props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
+    const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
+    const searchInputRef = useRef<HTMLInputElement>(null);
+
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+
     const onClose = useCallback(() => setIsOpen(false), []);
 
     useEffect(() => {
@@ -21,6 +29,7 @@ export const Header = ({ className }: Props) => {
         const closeDrawerOnTablet = (event: MediaQueryListEvent) => {
             if (event.matches) {
                 onClose();
+                setIsSearchActive(false); 
             }
         };
 
@@ -29,34 +38,47 @@ export const Header = ({ className }: Props) => {
             tabletBreakpoint.removeEventListener("change", closeDrawerOnTablet);
     }, [onClose]);
 
+    const toggleSearch = () => {
+        setIsSearchActive((prev) => {
+            const newState = !prev;
+            if (newState) {
+              setTimeout(() => searchInputRef.current?.focus(), 50);
+            }
+            return newState;
+        });
+    };
+
     const handleSearchSubmit = useCallback(
         (e: SyntheticEvent) => {
             e.preventDefault();
-            if (!searchQuery.trim()) return;
 
-            //
+            const trimmedQuery = searchQuery.trim();
+            if (!trimmedQuery) return;
+
+            navigate(`/catalog?search=${encodeURIComponent(trimmedQuery)}`);
+            setSearchQuery('');
+            onClose();
+            setIsSearchActive(false); 
         },
-        [searchQuery],
+        [searchQuery, navigate, onClose],
     );
 
     return (
         <header className={`${styles.header} ${className ?? ""}`.trim()}>
             <button
-                className={isOpen ? styles.xButton : styles.menuButton}
+                className={clsx(
+                    isOpen ? styles.xButton : styles.menuButton,
+                    isSearchActive && styles.hideOnMobile
+                )}
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
             >
-                {isOpen ?
-                    <X size={16} />
-                :   <Menu size={24} />}
+                {isOpen ? <X size={16} /> : <Menu size={24} />}
             </button>
 
-            <div className={styles.leftGroup}>
-                <Link
-                    to={"/"}
-                    className={styles.logo}
-                >
+            <div className={clsx(styles.leftGroup, isSearchActive && styles.hideOnMobile)}>
+                <Link to={"/"} className={styles.logo}>
                     CINEBASE
                 </Link>
 
@@ -65,20 +87,15 @@ export const Header = ({ className }: Props) => {
                 </nav>
             </div>
 
-            <div className={styles.actionsGroup}>
-                <button
-                    className={styles.searchButton}
-                    aria-label="Toggle mobile search"
-                >
-                    <Search size={22} />
-                </button>
-
+            <div className={clsx(styles.actionsGroup, isSearchActive && styles.searchExpanded)}>
+                
                 <form
-                    className={styles.searchInputWrapper}
+                    className={clsx(styles.searchInputWrapper, isSearchActive && styles.active)}
                     onSubmit={handleSearchSubmit}
                     role="search"
                 >
                     <input
+                        ref={searchInputRef}
                         className={styles.searchInput}
                         placeholder="Search movies..."
                         value={searchQuery}
@@ -88,24 +105,41 @@ export const Header = ({ className }: Props) => {
                 </form>
 
                 <button
-                    className={styles.bellButton}
+                    type="button"
+                    className={styles.searchButton}
+                    aria-label="Toggle mobile search"
+                    onClick={toggleSearch}
+                >
+                    {isSearchActive ? <X size={22} /> : <Search size={22} />}
+                </button>
+
+                <button
+                    className={clsx(styles.bellButton, isSearchActive && styles.hideOnMobile)}
                     aria-label="Notifications"
                 >
                     <Bell size={22} />
                 </button>
 
-                <Link
+                {isAuthenticated ? (
+                  <Link
                     to={"/user"}
-                    className={styles.userLink}
+                    className={clsx(styles.userLink, isSearchActive && styles.hideOnMobile)}
                     aria-label="User profile"
-                >
+                  >
                     <CircleUser size={22} />
-                </Link>
+                  </Link>
+                ) : (
+                  <Link
+                    to={"/login"}
+                    className={clsx(styles.userLink, isSearchActive && styles.hideOnMobile)}
+                    aria-label="Log in"
+                  >
+                    <LogIn size={22} />
+                  </Link>
+                )}
+                
             </div>
-            <NavDrawer
-                isOpen={isOpen}
-                onClose={onClose}
-            />
+            <NavDrawer isOpen={isOpen} onClose={onClose} />
         </header>
     );
 };

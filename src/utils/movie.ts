@@ -11,3 +11,17 @@ export const formatRuntime = (minutes: number | null): string => {
     if (mins === 0) return `${hours}h`;
     return `${hours}h ${mins}m`;
 };
+
+export const getYouTubeEmbedUrl = (url: string | null | undefined): string | null => {
+  
+    if (!url) return null;
+
+    const regExp = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/;
+    const match = url.match(regExp);
+
+    if (match && match[1]) {
+        return `https://www.youtube-nocookie.com/embed/${match[1]}?autoplay=1`;
+    }
+
+    return null;
+};
