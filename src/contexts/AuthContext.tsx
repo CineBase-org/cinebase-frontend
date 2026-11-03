@@ -49,7 +49,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     };
 
     restoreSession();
-  })
+  }, [])
 
   const login = (userData: User, tokens: AuthTokens) => {
     setUser(userData);

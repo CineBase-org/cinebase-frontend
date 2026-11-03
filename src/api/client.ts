@@ -22,6 +22,7 @@ export const apiFetch = async <T>(
     if (init?.body && typeof init.body === "string" && !headers.has("Content-Type")) {
         headers.set("Content-Type", "application/json");
     }
+
     if (accessToken) {
         headers.set("Authorization", `Bearer ${accessToken}`);
     }
@@ -34,6 +35,7 @@ export const apiFetch = async <T>(
     if (response.status === 401) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
+
         throw new ApiError(401, "Unauthorized");
     }
 

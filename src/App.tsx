@@ -9,49 +9,24 @@ import { ProtectedRoute } from "./components/Route";
 import { UserPage } from "./pages/UserPage";
 import { WatchList } from "./pages/WatchList";
 
-
 function App() {
-    return (
-        <Routes>
-            <Route
-                path="/"
-                element={<MainLayout />}
-            >
-                <Route
-                    index
-                    element={<HomePage />}
-                />
-                <Route
-                    path="catalog"
-                    element={<CatalogPage />}
-                />
-                <Route
-                    path="movie/:id"
-                    element={<MoviePage />}
-                />
-                <Route
-                    path="login"
-                    element={<Login />}
-                />
-                <Route
-                    path="register"
-                    element={<Register />}
-                />
-                <Route
-                    path="watchlist"
-                    element={<WatchList />}
-                />
-                <Route 
-                  element={<ProtectedRoute />}
-                >
-                <Route 
-                  path="user" 
-                  element={<UserPage />} 
-                />
-                </Route>
-            </Route>
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="catalog" element={<CatalogPage />} />
+        <Route path="movie/:id" element={<MoviePage />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+
+        <Route path="watchlist" element={<WatchList />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="user" element={<UserPage />} />
+        </Route>
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;
