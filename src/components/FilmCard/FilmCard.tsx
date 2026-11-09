@@ -19,12 +19,12 @@ export const FilmCard = ({ film, className }: FilmCardProps) => {
     <article className={clsx(styles.film, className)}>
       <div className={styles.imageWrapper}>
         {posterUrl ? (
-          <img
-            className={styles.image}
-            src={posterUrl}
-            alt={film.title}
-            loading="lazy"
-          />
+            <img
+              className={styles.image}
+              src={posterUrl}
+              alt={film.title}
+              loading="lazy"
+            />
         ) : (
           <div className={styles.imageFallback} aria-hidden="true" />
         )}

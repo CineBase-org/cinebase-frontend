@@ -1,0 +1,155 @@
+.stepSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  @include respond-to(tablet) {
+    margin-bottom: 20px;
+  }
+
+  .stepNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: $color-accent;
+    color: $color-white;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: $color-white;
+
+    @include respond-to(tablet) {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.moodGrid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include respond-to(desktop) {
+    gap: 16px;
+    scrollbar-width: auto;
+    &::-webkit-scrollbar {
+      display: block;
+      height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $color-input;
+      border-radius: 4px;
+    }
+  }
+}
+
+.moodCard {
+  position: relative;
+  min-width: 100px;
+  height: 86px;
+  border-radius: 12px;
+  background-color: $color-card;
+  border: 1px solid $color-input;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all $time-fast $ease-out-apple;
+  color: $color-caption;
+  padding: 8px;
+  flex-shrink: 0;
+
+  @include respond-to(tablet) {
+    min-width: 120px;
+    height: 96px;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .moodIcon {
+    transition:
+      transform $time-fast $ease-out-apple,
+      color $time-fast $ease-out-apple;
+  }
+
+  span {
+    font-size: 0.8rem;
+    font-weight: 500;
+
+    @include respond-to(desktop) {
+      font-size: 0.85rem;
+    }
+  }
+
+  .radio {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid $color-caption;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $time-fast $ease-out-apple;
+
+    @include respond-to(tablet) {
+      top: 8px;
+      left: 8px;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &:hover {
+    border-color: lighten(#242426, 15%);
+    color: $color-white;
+
+    .moodIcon {
+      transform: scale(1.1);
+    }
+  }
+
+  &.selected {
+    background-color: rgba(229, 9, 20, 0.08);
+    border-color: $color-accent;
+    color: $color-white;
+
+    .moodIcon {
+      color: $color-accent;
+    }
+
+    .radio {
+      border-color: $color-accent;
+      .radioDot {
+        width: 6px;
+        height: 6px;
+        background-color: $color-accent;
+        border-radius: 50%;
+      }
+    }
+  }
+}

@@ -33,7 +33,7 @@ export const NavLinks = ({ onItemClick }: NavLinksProps) => {
             <li className={styles.item}>
                 <NavLink
                     className={clsx(styles.link, styles.linkAccent)}
-                    to={"/"}
+                    to={"/moviepicker"}
                     onClick={onItemClick}
                 >
                     % Movie Picker ✨

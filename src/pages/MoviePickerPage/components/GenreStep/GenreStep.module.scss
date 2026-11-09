@@ -1,0 +1,80 @@
+.stepSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  @include respond-to(tablet) {
+    margin-bottom: 20px;
+  }
+
+  .stepNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background-color: $color-accent;
+    color: $color-white;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: $color-white;
+
+    @include respond-to(tablet) {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.genresCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  @include respond-to(tablet) {
+    gap: 12px;
+  }
+}
+
+.genrePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: $color-card;
+  color: $color-caption;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all $time-fast $ease-out-apple;
+
+  @include respond-to(tablet) {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    gap: 8px;
+  }
+
+  &:hover {
+    color: $color-white;
+    background-color: lighten(#1f1f22, 5%);
+  }
+
+  &.selected {
+    background-color: $color-accent;
+    color: $color-white;
+  }
+}

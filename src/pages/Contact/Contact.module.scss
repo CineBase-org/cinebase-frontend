@@ -1,0 +1,87 @@
+.contactContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 16px;
+  color: $color-white;
+
+  @include respond-to(desktop) { 
+    padding: 80px 40px; 
+  }
+}
+
+.top {
+  text-align: center;
+  margin-bottom: 60px;
+
+  .title { 
+    font-size: 2.5rem; 
+    margin: 0 0 16px 0; 
+    font-family: $font-family-headline;
+    
+    .specialSpan { 
+      color: $color-accent; 
+      margin-left: 8px;
+    } 
+  }
+  
+  .description { 
+    color: $color-caption; 
+    font-size: 1.1rem; 
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+.contentGrid {
+  display: grid;
+  gap: 24px;
+
+  @include respond-to(desktop) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.contactCard {
+  background-color: $color-bg-surface;
+  border: 1px solid $color-input;
+  padding: 32px 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  color: $color-white;
+  transition: all $time-fast $ease-out-apple;
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: rgba(229, 9, 20, 0.5); 
+    background-color: lighten(#090a0e, 2%);
+  }
+
+  .iconBox { 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background-color: rgba(229, 9, 20, 0.1);
+    color: $color-accent;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  .cardInfo {
+    h3 { 
+      margin: 0 0 8px 0; 
+      font-size: 1.2rem; 
+    }
+    p { 
+      margin: 0; 
+      color: $color-caption; 
+      font-size: 0.95rem;
+    }
+  }
+}
