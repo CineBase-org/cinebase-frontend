@@ -11,7 +11,7 @@ export const PickerCallout = () => (
 
         {/* TODO: point to the Movie Picker route once it exists */}
         <Link
-            to="/"
+            to="/moviepicker"
             className={styles.button}
         >
             Pick Film →
