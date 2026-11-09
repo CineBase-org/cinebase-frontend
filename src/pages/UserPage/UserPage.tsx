@@ -1,13 +1,11 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import type { User } from '../../contexts/AuthContext';
-import { LogOut, User as UserIcon, MapPin, Calendar, FileText, Edit, X, Save } from 'lucide-react';
+import { useAuth, type User } from '../../contexts/AuthContext';
+import { LogOut, MapPin, Calendar, FileText, Edit, X, Save, UploadCloud } from 'lucide-react';
 
 import styles from './UserPage.module.scss';
+import { UserAvatar } from '../../components/UserAvatar';
 import { apiFetch } from '../../api/client';
-
-
 
 export const UserPage = () => {
     const { user, logout, updateUser } = useAuth();
@@ -16,6 +14,12 @@ export const UserPage = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [formData, setFormData] = useState({
       first_name: user?.first_name || '',
@@ -32,23 +36,35 @@ export const UserPage = () => {
 
     const handleEditToggle = () => {
       if (isEditing) {
-        setFormData ({
+        
+        setFormData({
           first_name: user?.first_name || '',
           last_name: user?.last_name || '',
           location: user?.location || '',
           birth_date: user?.birth_date || '',
           bio: user?.bio || '',
         });
+        setAvatarFile(null);
+        setPreviewUrl(null);
         setError(null);
       }
       setIsEditing(!isEditing);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement |HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFormData({
         ...formData,
         [e.target.name]: e.target.value,
       });
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setAvatarFile(file);
+        const objectUrl = URL.createObjectURL(file);
+        setPreviewUrl(objectUrl);
+      }
     };
 
     const handleSubmit = async (e: FormEvent) => {
@@ -56,17 +72,36 @@ export const UserPage = () => {
       setIsLoading(true);
       setError(null);
 
+      const submitData = new FormData();
+      
+      if (formData.first_name) submitData.append('first_name', formData.first_name);
+      if (formData.last_name) submitData.append('last_name', formData.last_name);
+      if (formData.location) submitData.append('location', formData.location);
+      if (formData.bio) submitData.append('bio', formData.bio);
+      if (formData.birth_date) submitData.append('birth_date', formData.birth_date);
+      
+      if (avatarFile) {
+        submitData.append('avatar', avatarFile);
+      }
+
       try {
         const updatedUser = await apiFetch<User>("/api/user/me/", {
           method: "PUT",
-          body: JSON.stringify(formData),
+          body: submitData, // FormData (твій apiFetch не поставить для нього 'Content-Type: application/json')
         });
 
         updateUser(updatedUser);
         setIsEditing(false);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to update profile. Check the entered data.");
+        setAvatarFile(null);
+        setPreviewUrl(null);
+        
+      } catch (err: unknown) {
+        console.error("Помилка оновлення:", err);
+        if (err instanceof Error) {
+           setError(err.message);
+        } else {
+           setError("Failed to update profile. Check the entered data.");
+        }
       } finally {
         setIsLoading(false);
       }
@@ -76,12 +111,28 @@ export const UserPage = () => {
         return <div className={styles.loader}>Завантаження...</div>;
     }
 
+    const displayAvatar = isEditing && previewUrl ? previewUrl : user.avatar;
+
     return (
         <div className={styles.userPageContainer}>
             <div className={styles.profileCard}>
                 <div className={styles.header}>
-                    <div className={styles.avatar}>
-                        <UserIcon size={48} />
+                    <div className={styles.avatarContainer}>
+                      <UserAvatar 
+                        avatarUrl={displayAvatar} 
+                        className={styles.profileAvatar} 
+                      />
+                      
+                      {isEditing && (
+                        <button 
+                          type="button"
+                          className={styles.uploadOverlayBtn}
+                          onClick={() => fileInputRef.current?.click()}
+                          title="Upload new photo"
+                        >
+                          <UploadCloud size={24} />
+                        </button>
+                      )}
                     </div>
 
                     {!isEditing && (
@@ -104,8 +155,28 @@ export const UserPage = () => {
 
                 {error && <div className={styles.error}>{error}</div>}
 
-                {isEditing ?(
+                {isEditing ? (
                   <form onSubmit={handleSubmit} className={styles.editForm}>
+                    
+                    <input 
+                      type="file" 
+                      accept="image/png, image/jpeg, image/jpg, image/webp"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      style={{ display: 'none' }} 
+                    />
+
+                    <div className={styles.inputGroup}>
+                      <label>Avatar Photo</label>
+                      <button 
+                        type="button" 
+                        className={styles.uploadBtn}
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        {avatarFile ? avatarFile.name : "Choose a file from computer"}
+                      </button>
+                    </div>
+
                     <div className={styles.row}>
                       <div className={styles.inputGroup}>
                         <label htmlFor="first_name">Name</label>
@@ -158,7 +229,7 @@ export const UserPage = () => {
                         <input 
                           id="bio" 
                           name="bio" 
-                          type="bio"
+                          type="text" 
                           value={formData.bio}
                           onChange={handleChange}
                           placeholder="Tell us a little about yourself..."

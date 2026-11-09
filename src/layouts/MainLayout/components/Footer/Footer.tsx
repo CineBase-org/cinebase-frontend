@@ -39,7 +39,7 @@ export const Footer = ({ className }: Props) => {
                     onClick={scrollToTop}
                     className={styles.backToTopButton}
                 >
-                    <span className={styles.backToTopText}>Back to top</span>
+                    <span className={styles.backToTopText}></span>
 
                     <div className={styles.iconWrapper}>
                         <ChevronUp

@@ -1,0 +1,94 @@
+.aboutContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 16px;
+  color: $color-white;
+
+  @include respond-to(desktop) { padding: 60px 40px; }
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-family: $font-family-headline;
+  margin: 0 0 16px 0;
+  
+  @include respond-to(desktop) { font-size: 3.5rem; }
+}
+
+.specialSpan { 
+  color: $color-accent; 
+}
+
+.description {
+  font-size: 1.1rem;
+  color: $color-caption;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+
+.featuresGrid {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 80px;
+
+  @include respond-to(desktop) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featureCard {
+  background-color: $color-bg-surface;
+  border: 1px solid $color-input;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform $time-fast $ease-out-apple;
+
+  &:hover { transform: translateY(-8px); border-color: rgba(229, 9, 20, 0.5); }
+
+  .iconBox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background-color: rgba(229, 9, 20, 0.1);
+    color: $color-accent;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+
+  h3 { margin: 0 0 12px 0; font-size: 1.2rem; }
+  p { margin: 0; color: $color-caption; font-size: 0.95rem; line-height: 1.5; }
+}
+
+.ctaSection {
+  text-align: center;
+  background-color: $color-card;
+  padding: 60px 20px;
+  border-radius: 24px;
+  border: 1px solid $color-input;
+
+  h2 { margin: 0 0 24px 0; font-size: 1.8rem; }
+
+  .primaryBtn {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 32px;
+    background-color: $color-accent;
+    color: $color-white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: background $time-fast;
+
+    &:hover { background-color: darken(#e50914, 5%); }
+  }
+}

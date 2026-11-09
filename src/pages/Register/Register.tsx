@@ -51,7 +51,7 @@ export const Register = () => {
 
   return (
     <div className={styles.registerContainer}>
-      <h1 className={styles.title}>Registration with<span className={styles.accentText}>CINEBASE</span></h1>
+      <h1 className={styles.title}>Registration with <span className={styles.accentText}>CINEBASE</span></h1>
 
       <form onSubmit={handleSubmit} className={styles.form}>
         {error && <div className={styles.error}>{error}</div>}

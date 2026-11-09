@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import type { MouseEvent } from "react";
 import { Check, Plus } from "lucide-react";
 import { Button } from "./Button";
 import type { ButtonStyleProps } from "./buttonClasses";
@@ -41,7 +42,10 @@ export const AddButton = ({
     const isAdded =
         movieId === undefined ? localIsAdded : movieIds.includes(movieId);
 
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
         if (movieId === undefined) {
             const next = !isAdded;
             setLocalIsAdded(next);

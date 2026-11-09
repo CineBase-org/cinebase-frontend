@@ -1,0 +1,265 @@
+.summaryColumn {
+  @include respond-to(desktop) {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+.summaryCard {
+  background-color: $color-bg-surface;
+  border: 1px solid $color-input;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  @include respond-to(tablet) {
+    padding: 32px;
+  }
+}
+
+.summaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  @include respond-to(tablet) {
+    margin-bottom: 24px;
+  }
+
+  h2 { font-size: 1.1rem; margin: 0; color: $color-white; @include respond-to(tablet) { font-size: 1.25rem; } }
+  
+  .editButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    color: $color-accent;
+    font-size: 0.85rem;
+    cursor: pointer;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.summaryList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include respond-to(tablet) {
+    margin: 0 0 24px 0;
+    gap: 20px;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    @include respond-to(tablet) {
+      gap: 16px;
+    }
+
+    .iconBox {
+      color: $color-accent;
+      display: flex;
+    }
+
+    .itemInfo {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .label { font-size: 0.75rem; color: $color-caption; @include respond-to(tablet){ font-size: 0.8rem; } }
+      .value { font-size: 0.9rem; font-weight: 500; color: $color-white; @include respond-to(tablet){ font-size: 0.95rem; } }
+    }
+
+    .chevron { color: $color-caption; }
+  }
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(229, 9, 20, 0.1);
+  border: 1px solid rgba(229, 9, 20, 0.3);
+  color: $color-accent;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+.pickedResultCard {
+  background-color: $color-card;
+  border: 1px solid $color-input;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  animation: fadeIn $time-base $ease-out-apple;
+
+  .resultPoster {
+    width: 90px;
+    height: 130px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .resultDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0 0 6px 0;
+      color: $color-white;
+    }
+
+    .resultMeta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: $color-caption;
+      margin-bottom: 8px;
+
+      .ratingBadge {
+        background-color: rgba(229, 9, 20, 0.2);
+        color: $color-accent;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+    }
+
+    p {
+      font-size: 0.8rem;
+      color: $color-caption;
+      margin: 0 0 10px 0;
+      line-clamp: 2;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .detailsLink {
+      color: $color-accent;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.postersGraphic {
+  position: relative;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  margin-top: auto;
+
+  @include respond-to(tablet) {
+    height: 200px;
+    margin-bottom: 32px;
+  }
+
+  img {
+    position: absolute;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  }
+
+  .posterLeft, .posterRight {
+    width: 80px;
+    height: 120px;
+    opacity: 0.6;
+    z-index: 1;
+
+    @include respond-to(tablet) {
+      width: 100px;
+      height: 150px;
+    }
+  }
+
+  .posterLeft { left: 15%; transform: rotate(-10deg); @include respond-to(desktop){ left: 10%; } }
+  .posterRight { right: 15%; transform: rotate(10deg); @include respond-to(desktop){ right: 10%; } }
+
+  .posterCenter {
+    width: 100px;
+    height: 150px;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    @include respond-to(tablet) {
+      width: 130px;
+      height: 190px;
+    }
+  }
+}
+
+.findButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  background-color: $color-accent;
+  color: $color-white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $time-fast $ease-out-apple;
+
+  @include respond-to(tablet) {
+    padding: 16px;
+    font-size: 1.1rem;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: darken(#e50914, 5%);
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+.spinIcon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
