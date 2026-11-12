@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .summaryColumn {
   @include respond-to(desktop) {
     position: sticky;
@@ -245,7 +247,7 @@
   }
 
   &:hover:not(:disabled) {
-    background-color: darken(#e50914, 5%);
+    background-color: color.adjust(#e50914, $lightness: -5%);
     transform: translateY(-2px);
   }
 

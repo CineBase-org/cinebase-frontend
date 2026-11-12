@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .userPageContainer {
     display: flex;
     justify-content: center;
@@ -86,7 +88,7 @@
     transition: transform $time-fast $ease-out-apple, background-color $time-fast $ease-out-apple;
 
     &:hover {
-        background-color: darken(#e50914, 10%);
+        background-color: color.adjust(#e50914, $lightness: -10%);
         transform: scale(1.1);
     }
 }
@@ -317,7 +319,7 @@
         border: 1px solid transparent;
         
         &:hover:not(:disabled) {
-            background-color: darken(#e50914, 10%);
+            background-color: color.adjust(#e50914, $lightness: -10%);
         }
     }
 }

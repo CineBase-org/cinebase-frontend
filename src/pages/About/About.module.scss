@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .aboutContainer {
   max-width: 1000px;
   margin: 0 auto;
@@ -89,6 +91,6 @@
     font-weight: 600;
     transition: background $time-fast;
 
-    &:hover { background-color: darken(#e50914, 5%); }
+    &:hover { background-color: color.adjust(#e50914, $lightness: -5%); }
   }
 }

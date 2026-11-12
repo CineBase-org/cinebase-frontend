@@ -67,7 +67,7 @@ export const RatingSection = ({
       
     } catch (error) {
       console.error("Failed to send rating to backend:", error);
-      setRating(previousRating);
+      setRating(previousRating ?? 0);
     }
   }
 
@@ -99,9 +99,9 @@ export const RatingSection = ({
                 className={styles.feedback}
                 aria-live="polite"
             >
-                {feedbackValue !== null && feedbackValue > 0 ?
-                     LABELS[Math.ceil(feedbackValue) - 1] 
-                :   ""}
+                {feedbackValue !== null && feedbackValue > 0
+                  ? LABELS[Math.ceil(feedbackValue) - 1]
+                  : ""}
                 {hovered === null && userRating !== null && (
                     <span className={styles.thanks}> · Thanks for rating!</span>
                 )}
