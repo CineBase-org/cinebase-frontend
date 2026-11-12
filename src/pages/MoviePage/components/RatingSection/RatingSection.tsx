@@ -7,49 +7,69 @@ import { useUserRating } from "../../hooks/useUserRating";
 import styles from "./RatingSection.module.scss";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import { apiFetch } from "../../../../api/client"; 
+import { analytics } from "../../../../services/analytics";
 
 const LABELS = ["Terrible", "Poor", "Okay", "Good", "Great"] as const;
 
 interface Props {
-    movieId: number;
-    /** Average of all users' ratings, 0..5 */
-    averageRating: number;
-    ratingsCount: number;
-    className?: string;
+  movieId: number;
+  averageRating: number;
+  ratingsCount: number;
+  className?: string;
 }
 
 const formatScore = (value: number) => String(Number(value.toFixed(1)));
 
 export const RatingSection = ({
-    movieId,
-    averageRating,
-    ratingsCount,
-    className,
+  movieId,
+  averageRating,
+  ratingsCount,
+  className,
 }: Props) => {
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate();
-    const location = useLocation();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const { rating: userRating, setRating } = useUserRating(movieId);
-    const [hovered, setHovered] = useState<number | null>(null);
+  const { rating: userRating, setRating } = useUserRating(movieId);
+  const [hovered, setHovered] = useState<number | null>(null);
 
-    // Average = server average + the user's own vote.
-    const count = ratingsCount + (userRating !== null ? 1 : 0);
-    const average =
-        userRating !== null ?
-            (averageRating * ratingsCount + userRating) / count
-        :   averageRating;
+  const count = ratingsCount + (userRating !== null ? 1 : 0);
+  const average =
+      userRating !== null ?
+          (averageRating * ratingsCount + userRating) / count
+      :   averageRating;
 
-    const feedbackValue = hovered ?? userRating;
+  const feedbackValue = hovered ?? userRating;
 
-    const handleRatingChange = (newRating: number) => {
-      if (!isAuthenticated) {
-        navigate("/login", { state: {from: location.pathname }});
-        return;
-      }
-
-      setRating(newRating);
+  const handleRatingChange = async (newRating: number) => {
+    if (!isAuthenticated) {
+      navigate("/login", { state: {from: location.pathname }});
+      return;
     }
+
+    const previousRating = userRating; 
+    setRating(newRating);
+
+    try {
+      await apiFetch(`/api/movies/${movieId}/rating/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ score: newRating }),
+      });
+      
+      analytics.track('movie_rate', {
+        movie_id: movieId,
+        properties: { score: newRating }
+      });
+      
+    } catch (error) {
+      console.error("Failed to send rating to backend:", error);
+      setRating(previousRating);
+    }
+  }
 
     return (
         <section
@@ -80,7 +100,7 @@ export const RatingSection = ({
                 aria-live="polite"
             >
                 {feedbackValue !== null && feedbackValue > 0 ?
-                    LABELS[feedbackValue - 1]
+                     LABELS[Math.ceil(feedbackValue) - 1] 
                 :   ""}
                 {hovered === null && userRating !== null && (
                     <span className={styles.thanks}> · Thanks for rating!</span>

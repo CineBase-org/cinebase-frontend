@@ -1,15 +1,14 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getMovies } from "../../../api/movies";
 
-export const useFilms = (page: number, genreId: number | null, searchQuery: string = "") => {
+export const useFilms = (page: number, genreIds: string | null, searchQuery: string = "") => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["movies", page, genreId, searchQuery],
+    queryKey: ["movies", page, genreIds, searchQuery],
     
     queryFn: () => 
       getMovies({
         page,
-        genres: genreId === null ? undefined : String(genreId),
-
+        genres: genreIds === null ? undefined : genreIds,
         search: searchQuery || undefined, 
       }),
       

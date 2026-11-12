@@ -213,11 +213,13 @@
 .row {
     display: flex;
     flex-direction: column;
-    gap: rem(16);
+    width: 100%;
+    gap: 16px;
 
     @include respond-to(desktop) {
       flex-direction: row;
-      align-items: start;
+      align-items: flex-start;
+      gap: 16px;
     }
     
     .inputGroup {
@@ -229,6 +231,13 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
+    width: 100%;
+
+    .row & {
+        flex: 1;
+        min-width: 0; 
+        margin-bottom: 0;
+    }
     
     label {
         margin-bottom: 6px;
@@ -237,6 +246,8 @@
     }
     
     input, textarea {
+        width: 100%;
+        box-sizing: border-box;
         padding: 10px 14px;
         border-radius: 8px;
         border: 1px solid $color-icon;

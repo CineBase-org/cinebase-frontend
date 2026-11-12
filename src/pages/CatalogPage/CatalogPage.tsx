@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -10,6 +9,7 @@ import { useFeaturedMovie } from "./hooks/useFeaturedMovie";
 import { useFilms } from "./hooks/useFilms";
 
 import styles from "./CatalogPage.module.scss";
+import { analytics } from "../../services/analytics";
 
 const GENRES = [
   { name: "All", id: null },
@@ -23,14 +23,19 @@ const GENRES = [
 ] as const;
 
 export const CatalogPage = () => {
-  const [activeGenre, setActiveGenre] = useState<string>("All");
   const [searchParams, setSearchParams] = useSearchParams();
+  
   const searchQuery = searchParams.get('search') || '';
-
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
 
-  const activeGenreId =
-    GENRES.find((genre) => genre.name === activeGenre)?.id ?? null;
+  const genresFromUrl = searchParams.get("genres");
+  const activeGenres = genresFromUrl ? genresFromUrl.split(",") : ["All"];
+
+  const activeGenreIds = activeGenres
+    .map((genreName) => GENRES.find((g) => g.name === genreName)?.id)
+    .filter((id) => id !== null && id !== undefined);
+
+  const genresParam = activeGenreIds.length > 0 ? activeGenreIds.join(',') : null;
 
   const {
     movie,
@@ -44,7 +49,7 @@ export const CatalogPage = () => {
     isLoading: isFilmsLoading,
     error: filmError,
     totalCount,
-  } = useFilms(page, activeGenreId, searchQuery);
+  } = useFilms(page, genresParam, searchQuery);
 
   const filmsPerPage = 14;
   const totalPages = Math.ceil(totalCount / filmsPerPage);
@@ -60,11 +65,37 @@ export const CatalogPage = () => {
   };
 
   const handleGenreChange = (genre: string) => {
-    setActiveGenre(genre);
+    let newSelectedGenres: string[];
+
+    if (genre === "All") {
+      newSelectedGenres = ["All"];
+    } else {
+      if (activeGenres.includes(genre)) {
+        newSelectedGenres = activeGenres.filter((g) => g !== genre);
+        if (newSelectedGenres.length === 0) {
+          newSelectedGenres = ["All"];
+        }
+      } else {
+        newSelectedGenres = activeGenres.filter((g) => g !== "All").concat(genre);
+      }
+    }
 
     const params = new URLSearchParams(searchParams);
-    params.delete("page");
+    params.delete("page"); 
+
+    if (newSelectedGenres.includes("All") || newSelectedGenres.length === 0) {
+      params.delete("genres"); 
+    } else {
+      params.set("genres", newSelectedGenres.join(",")); 
+    }
+
     setSearchParams(params);
+
+    analytics.track('filter_apply', {
+      properties: {
+        genres: newSelectedGenres.includes("All") ? [] : newSelectedGenres
+      }
+    });
   };
 
   return (
@@ -100,7 +131,7 @@ export const CatalogPage = () => {
         <GenreFilter
           className={styles.filter}
           genres={GENRES.map((genre) => genre.name)}
-          activeGenre={activeGenre}
+          activeGenres={activeGenres}
           onGenreChange={handleGenreChange}
         />
 

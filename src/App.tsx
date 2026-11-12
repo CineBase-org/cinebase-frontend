@@ -11,9 +11,12 @@ import { WatchList } from "./pages/WatchList";
 import { MoviePicker } from "./pages/MoviePickerPage";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
+import { usePageTracking } from "./hooks/usePageTracking";
 
 
 function App() {
+  usePageTracking();
+  
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
