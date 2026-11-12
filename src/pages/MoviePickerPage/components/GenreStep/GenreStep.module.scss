@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .stepSection {
   display: flex;
   flex-direction: column;
@@ -70,7 +72,7 @@
 
   &:hover {
     color: $color-white;
-    background-color: lighten(#1f1f22, 5%);
+    background-color: color.adjust(#1f1f22, $lightness: 5%);
   }
 
   &.selected {

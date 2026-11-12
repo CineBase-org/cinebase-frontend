@@ -4,6 +4,8 @@ import { Check, Plus } from "lucide-react";
 import { Button } from "./Button";
 import type { ButtonStyleProps } from "./buttonClasses";
 import { useWatchlist } from "../../contexts/useWatchlist";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const visuallyHidden = {
     position: "absolute",
@@ -36,6 +38,10 @@ export const AddButton = ({
     ...rest
 }: Props) => {
     const { movieIds, hasError, toggleMovie } = useWatchlist();
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const iconSize = size === "sm" ? 12 : 14;
     const statusId = useId();
     const [localIsAdded, setLocalIsAdded] = useState(defaultAdded);
@@ -51,6 +57,11 @@ export const AddButton = ({
             setLocalIsAdded(next);
             onToggle?.(next);
             return;
+        }
+
+        if (!isAuthenticated) {
+          navigate("/login", { state: { from: location.pathname }});
+          return;
         }
 
         if (toggleMovie(movieId)) onToggle?.(!isAdded);

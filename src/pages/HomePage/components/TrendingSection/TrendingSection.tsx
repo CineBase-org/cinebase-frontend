@@ -17,6 +17,7 @@ export const TrendingSection = () => {
     const [emblaRef] = useEmblaCarousel({
         loop: false,
         align: "start",
+        dragFree: true,
     });
 
     return (

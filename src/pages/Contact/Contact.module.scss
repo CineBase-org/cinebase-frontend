@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .contactContainer {
   max-width: 800px;
   margin: 0 auto;
@@ -58,7 +60,7 @@
   &:hover {
     transform: translateY(-8px);
     border-color: rgba(229, 9, 20, 0.5); 
-    background-color: lighten(#090a0e, 2%);
+    background-color: color.adjust(#090a0e, $lightness: 2%);
   }
 
   .iconBox { 

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .registerContainer {
     display: flex;
     flex-direction: column;
@@ -84,7 +86,7 @@
     transition: background-color $time-fast $ease-out-apple, transform $time-fast $ease-out-apple;
 
     &:hover:not(:disabled) {
-        background-color: darken(#e50914, 10%);
+        background-color: color.adjust(#e50914, $lightness: -10%);
     }
 
     &:active:not(:disabled) {

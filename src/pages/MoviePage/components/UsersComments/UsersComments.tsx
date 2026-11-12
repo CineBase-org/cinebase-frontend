@@ -7,6 +7,7 @@ import { getComments, postComment } from '../../../../api/comments';
 import { Link, useLocation } from 'react-router-dom';
 import { Send } from 'lucide-react';
 import { UserAvatar } from '../../../../components/UserAvatar';
+import { analytics } from '../../../../services/analytics';
 
 interface Props {
   movieId: number;
@@ -31,6 +32,10 @@ export const UsersComments = ({ movieId, className }: Props) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', movieId] });
       setNewComment('');
+
+      analytics.track('comment_create', {
+        movie_id: movieId
+      });
     },
   });
 

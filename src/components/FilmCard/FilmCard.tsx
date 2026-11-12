@@ -5,6 +5,7 @@ import styles from "./FilmCard.module.scss";
 import type { Film } from "../../types/Film";
 import { AddButton, LinkButton, ShareButton } from "../Button";
 import { usePosterUrl } from "../../hooks/usePosterUrl";
+import { analytics } from "../../services/analytics";
 
 type FilmCardProps = {
   film: Film;
@@ -14,6 +15,10 @@ type FilmCardProps = {
 export const FilmCard = ({ film, className }: FilmCardProps) => {
   const moviePath = `/movie/${film.id}`;
   const posterUrl = usePosterUrl(film.poster_path);
+
+  const handleCardClick = () => {
+    analytics.track('movie_card_click', { movie_id: film.id });
+  };
 
   return (
     <article className={clsx(styles.film, className)}>
@@ -43,7 +48,7 @@ export const FilmCard = ({ film, className }: FilmCardProps) => {
       </div>
 
       <h3 className={styles.film__name}>
-        <Link to={moviePath} className={styles.titleLink}>
+        <Link to={moviePath} className={styles.titleLink} onClick={handleCardClick}>
           {film.title}
         </Link>
       </h3>
@@ -60,7 +65,7 @@ export const FilmCard = ({ film, className }: FilmCardProps) => {
 
         <span className={styles.rating}>
           <Star size={14} fill="currentColor" />
-          {film.vote_average.toFixed(1)}
+          {film.vote_average > 0 ? film.vote_average.toFixed(1) : "N/A"}
         </span>
       </div>
 
@@ -71,6 +76,7 @@ export const FilmCard = ({ film, className }: FilmCardProps) => {
             size="sm"
             fullWidth
             className={styles.openButton}
+            onClick={handleCardClick}
           >
             Open
           </LinkButton>
