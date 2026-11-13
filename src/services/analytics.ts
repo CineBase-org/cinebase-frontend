@@ -31,7 +31,9 @@ class AnalyticsService {
   private queue: AnalyticsEvent[] = [];
   private batchInterval: number = 5000; 
   private timerId: number | null = null;
-  private endpoint = '/api/analytics/events/';
+  
+  private endpoint = 'https://api.cinebase.fun/api/analytics/events/';
+  
   private SESSION_TIMEOUT_MS = 30 * 60 * 1000;
 
   constructor() {
@@ -42,7 +44,8 @@ class AnalyticsService {
       }
     });
   }
-private getVisitorId(): string {
+
+  private getVisitorId(): string {
     let visitorId = localStorage.getItem('visitor_id');
     if (!visitorId) {
       visitorId = crypto.randomUUID();
@@ -80,7 +83,6 @@ private getVisitorId(): string {
     return 'desktop';
   }
 
-
   public track(
     eventName: AnalyticsEventName,
     params?: { movie_id?: number; properties?: Record<string, JsonValue> }
@@ -102,14 +104,12 @@ private getVisitorId(): string {
     };
 
     this.queue.push(event);
-
     this.getSessionData(); 
 
     if (this.queue.length >= 50) {
       this.flush();
     }
   }
-
 
   private startBatching() {
     if (this.timerId) clearInterval(this.timerId);
@@ -130,12 +130,25 @@ private getVisitorId(): string {
       events: eventsToSend,
     };
 
-    const token = localStorage.getItem('token'); 
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
+    
+    const token = localStorage.getItem('token'); 
     if (token) {
       headers['Authorization'] = `Bearer ${token}`; 
+    }
+
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+      return null;
+    };
+
+    const csrfToken = getCookie('csrftoken'); 
+    if (csrfToken) {
+      headers['X-CSRFTOKEN'] = csrfToken; 
     }
 
     fetch(this.endpoint, {
@@ -143,6 +156,7 @@ private getVisitorId(): string {
       headers,
       body: JSON.stringify(payload),
       keepalive: isUnloading, 
+      credentials: 'include', 
     }).catch(() => {
     });
   }
