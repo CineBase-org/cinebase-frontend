@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Темний фон із закругленими кутами -->
+  <rect width="512" height="512" rx="115" fill="#090a0e" />
+  
+  <!-- Акцентна літера C -->
+  <text x="50%" y="54%" font-family="Montserrat, system-ui, sans-serif" font-weight="900" font-size="360" fill="#e50914" text-anchor="middle" dominant-baseline="middle">
+    C
+  </text>
+</svg>
