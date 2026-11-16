@@ -171,7 +171,11 @@ export const MoviePicker = () => {
       console.error("Error fetching random movie:", err);
       const errorObj = err as { status?: number; code?: string };
 
-      if (errorObj?.status === 403 && errorObj?.code === 'subscription_required') {
+      if (errorObj?.status === 401) {
+        window.location.href = '/login';
+      } 
+      
+      else if (errorObj?.status === 403 && errorObj?.code === 'subscription_required') {
         setIsSubscriptionRequired(true);
       } else {
       setIsError("No movies found matching your criteria. Try expanding your filters.");
