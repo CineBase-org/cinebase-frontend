@@ -87,7 +87,7 @@ export const UserPage = () => {
 
       try {
         const updatedUser = await apiFetch<User>("/api/user/me/", {
-          method: "PUT",
+          method: "PATCH",
           body: submitData,
         });
 
