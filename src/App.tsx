@@ -13,10 +13,12 @@ import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { ActorPage } from "./pages/ActorPage";
 import { usePageTracking } from "./hooks/usePageTracking";
+import { PaymentSuccess } from "./pages/PaymentSuccess";
+import { PaymentCancel } from "./pages/PaymentCancel";
 
 function App() {
   usePageTracking();
-  
+
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -30,6 +32,8 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="person/:id" element={<ActorPage />} />
         <Route path="contact-us" element={<Contact />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/payment/cancel" element={<PaymentCancel />} />
         <Route element={<ProtectedRoute />}>
           <Route path="user" element={<UserPage />} />
         </Route>

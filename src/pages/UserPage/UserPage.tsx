@@ -6,6 +6,7 @@ import { LogOut, MapPin, Calendar, FileText, Edit, X, Save, UploadCloud } from '
 import styles from './UserPage.module.scss';
 import { UserAvatar } from '../../components/UserAvatar';
 import { apiFetch } from '../../api/client';
+import { UserSubscriptionSection } from './components/UserSubscriptionSection';
 
 export const UserPage = () => {
     const { user, logout, updateUser } = useAuth();
@@ -87,7 +88,7 @@ export const UserPage = () => {
       try {
         const updatedUser = await apiFetch<User>("/api/user/me/", {
           method: "PUT",
-          body: submitData, // FormData (твій apiFetch не поставить для нього 'Content-Type: application/json')
+          body: submitData,
         });
 
         updateUser(updatedUser);
@@ -96,7 +97,7 @@ export const UserPage = () => {
         setPreviewUrl(null);
         
       } catch (err: unknown) {
-        console.error("Помилка оновлення:", err);
+        console.error("Update error:", err);
         if (err instanceof Error) {
            setError(err.message);
         } else {
@@ -108,7 +109,7 @@ export const UserPage = () => {
     };
 
     if (!user) {
-        return <div className={styles.loader}>Завантаження...</div>;
+        return <div className={styles.loader}>Loading...</div>;
     }
 
     const displayAvatar = isEditing && previewUrl ? previewUrl : user.avatar;
@@ -281,6 +282,8 @@ export const UserPage = () => {
                           </div>
                       </div>
                   </div>
+
+                  <UserSubscriptionSection />
 
                   <button className={styles.logoutButton} onClick={handleLogout}>
                       <LogOut size={20} />

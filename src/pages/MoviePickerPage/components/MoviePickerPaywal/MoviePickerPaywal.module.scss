@@ -1,0 +1,88 @@
+@use "sass:color";
+
+.paywallCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: rem(600);
+  width: 100%;
+  margin: rem(40) auto;
+  padding: rem(60) rem(24);
+  background-color: $color-bg-panel;
+  border: 1px solid $color-card;
+  border-radius: rem(16);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.paywallTitle {
+  font-family: $font-family-headline;
+  font-size: rem(28);
+  font-weight: 700;
+  color: $color-white;
+  margin-bottom: rem(16);
+}
+
+.paywallText {
+  font-size: rem(15);
+  color: $color-text-soft;
+  line-height: 1.5;
+  margin-bottom: rem(24);
+  max-width: rem(500);
+}
+
+.testCardHint {
+  background-color: $color-bg-base;
+  border: 1px solid $color-card;
+  border-radius: rem(8);
+  padding: rem(16);
+  max-width: rem(420);
+  width: 100%;
+  margin-bottom: rem(24);
+  text-align: left;
+  font-size: rem(14);
+  color: $color-text-soft;
+
+  p {
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.testCardTitle {
+  font-weight: 600;
+  color: $color-white;
+  margin-bottom: rem(8) !important;
+}
+
+.codeSnippet {
+  color: $color-accent;
+  background-color: $color-bg-surface;
+  padding: rem(2) rem(6);
+  border-radius: rem(4);
+  font-family: monospace;
+}
+
+.testCardSub {
+  margin-top: rem(4) !important;
+  color: $color-gray;
+  font-size: rem(13);
+}
+
+.subscribeButton {
+  background-color: $color-accent;
+  color: $color-white;
+  font-weight: 600;
+  font-size: rem(16);
+  padding: rem(12) rem(28);
+  border: none;
+  border-radius: rem(8);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background-color: color.adjust($color-accent, $lightness: -12%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(229, 9, 20, 0.4);
+  }
+}

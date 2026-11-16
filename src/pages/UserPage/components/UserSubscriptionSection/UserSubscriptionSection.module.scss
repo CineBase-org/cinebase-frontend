@@ -1,0 +1,77 @@
+@use "sass:color";
+
+.subscriptionCard {
+  background-color: $color-bg-panel;
+  border: 1px solid $color-card;
+  border-radius: rem(16);
+  padding: rem(28);
+  max-width: rem(540);
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.subscriptionHeader {
+  display: flex;
+  align-items: center;
+  gap: rem(12);
+  margin-bottom: rem(12);
+}
+
+.subscriptionIcon {
+  color: $color-accent;
+}
+
+.subscriptionTitle {
+  font-family: $font-family-headline;
+  font-size: rem(20);
+  font-weight: 700;
+  color: $color-white;
+  margin: 0;
+}
+
+.subscriptionText {
+  font-size: rem(14);
+  color: $color-text-soft;
+  line-height: 1.5;
+  margin-bottom: rem(20);
+}
+
+.portalButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8);
+  background-color: $color-accent;
+  color: $color-white;
+  font-weight: 600;
+  font-size: rem(15);
+  padding: rem(10) rem(20);
+  border: none;
+  border-radius: rem(8);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: color.adjust($color-accent, $lightness: -12%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(229, 9, 20, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

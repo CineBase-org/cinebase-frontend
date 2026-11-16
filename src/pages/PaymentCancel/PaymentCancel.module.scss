@@ -1,0 +1,68 @@
+@use "sass:color";
+
+.paymentCancelContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(24);
+  min-height: 80vh;
+  background-color: $color-bg-base;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: rem(480);
+  width: 100%;
+  padding: rem(40) rem(32);
+  background-color: $color-bg-panel;
+  border: 1px solid $color-card;
+  border-radius: rem(16);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.cancelIcon {
+  color: $color-accent;
+}
+
+.title {
+  font-family: $font-family-headline;
+  font-size: rem(24);
+  font-weight: 700;
+  color: $color-white;
+  margin-top: rem(16);
+  margin-bottom: rem(12);
+}
+
+.text {
+  font-size: rem(15);
+  color: $color-text-soft;
+  line-height: 1.5;
+  margin-bottom: rem(24);
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.button {
+  background-color: $color-accent;
+  color: $color-white;
+  font-weight: 600;
+  font-size: rem(15);
+  padding: rem(12) rem(24);
+  border: none;
+  border-radius: rem(8);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background-color: color.adjust($color-accent, $lightness: -12%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(229, 9, 20, 0.4);
+  }
+}
