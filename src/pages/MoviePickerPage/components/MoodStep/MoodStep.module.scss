@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .stepSection {
   display: flex;
   flex-direction: column;
@@ -125,7 +127,7 @@
   }
 
   &:hover {
-    border-color: lighten(#242426, 15%);
+    border-color: color.adjust(#242426, $lightness: 15%);
     color: $color-white;
 
     .moodIcon {
