@@ -9,7 +9,7 @@ export interface Comment {
   author: string;
   likes_count: number;
   is_liked: boolean;
-  avatar: string;
+  author_avatar?: string;
 }
 
 export interface CommentsResponse {
