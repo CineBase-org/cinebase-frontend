@@ -12,9 +12,11 @@ import { MoviePicker } from "./pages/MoviePickerPage";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { ActorPage } from "./pages/ActorPage";
-
+import { usePageTracking } from "./hooks/usePageTracking";
 
 function App() {
+  usePageTracking();
+  
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -26,7 +28,7 @@ function App() {
         <Route path="moviepicker" element={<MoviePicker />} />
         <Route path="watchlist" element={<WatchList />} />
         <Route path="about" element={<About />} />
-        <Route path="/person/:id" element={<ActorPage />} />
+        <Route path="person/:id" element={<ActorPage />} />
         <Route path="contact-us" element={<Contact />} />
         <Route element={<ProtectedRoute />}>
           <Route path="user" element={<UserPage />} />

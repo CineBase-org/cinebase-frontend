@@ -4,14 +4,14 @@ import styles from "./GenreFilter.module.scss";
 
 interface Props {
     genres: readonly string[];
-    activeGenre: string;
+    activeGenres: string[];
     onGenreChange: (genre: string) => void;
     className?: string;
 }
 
 export const GenreFilter = ({
     genres,
-    activeGenre,
+    activeGenres,
     onGenreChange,
     className,
 }: Props) => {
@@ -21,7 +21,7 @@ export const GenreFilter = ({
             aria-label="Filter by genre"
         >
             {genres.map((genre) => {
-                const isActive = genre === activeGenre;
+                const isActive = activeGenres.includes(genre);
 
                 return (
                     <li
