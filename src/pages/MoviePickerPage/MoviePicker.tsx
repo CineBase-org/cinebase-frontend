@@ -10,6 +10,7 @@ import { SurpriseCard } from './components/SurpriseCard';
 import { apiFetch } from '../../api/client';
 import type { PickedMovie } from '../../types/movies';
 import { PreferencesSummary } from './components/PreferencesSummary';
+import { analytics } from '../../services/analytics';
 
 const DEFAULT_YEARS: [number, number] = [2010, 2026];
 
@@ -98,6 +99,8 @@ export const MoviePicker = () => {
   };
 
   const handleReset = () => {
+    analytics.track('filter_reset');
+
     setSelectedGenres([]);
     setSelectedMood('');
     setYearRange(DEFAULT_YEARS);
@@ -109,6 +112,20 @@ export const MoviePicker = () => {
   const fetchRandomMovie = async (isSurprise = false) => {
     setIsLoading(true);
     setIsError(null);
+
+    if (isSurprise) {
+      analytics.track('surprise_me_click');
+    } else {
+      analytics.track('filter_apply', {
+        properties: {
+          genres: effectiveGenres,
+          mood: selectedMood || null,
+          min_rating: minRating || null,
+          year_from: yearRange[0],
+          year_to: yearRange[1]
+        }
+      });
+    }
 
     const params = new URLSearchParams();
 

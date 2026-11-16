@@ -121,7 +121,11 @@
         }
 
         &:not(:disabled):hover {
+<<<<<<< HEAD
             background-color: color.adjust(#e50914, $lightness: -10%); 
+=======
+            background-color: color.adjust(#e50914, $lightness: -10%);
+>>>>>>> 02d437ba588ed3f70856d0170a7f89b909d95b90
         }
         
         &:not(:disabled):active {

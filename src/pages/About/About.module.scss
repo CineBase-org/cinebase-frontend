@@ -91,5 +91,10 @@
     font-weight: 600;
     transition: background $time-fast;
 
+<<<<<<< HEAD
     &:hover { background-color: color.adjust(#e50914, $lightness: -5%)}; } 
+=======
+    &:hover { background-color: color.adjust(#e50914, $lightness: -5%); }
+  }
+>>>>>>> 02d437ba588ed3f70856d0170a7f89b909d95b90
 }

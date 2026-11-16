@@ -7,6 +7,7 @@ import { NavLinks } from "./NavLinks";
 
 import styles from "./Header.module.scss";
 import { useAuth } from "../../../../contexts/AuthContext";
+import { analytics } from "../../../../services/analytics";
 
 interface Props {
     className?: string;
@@ -54,6 +55,10 @@ export const Header = ({ className }: Props) => {
 
             const trimmedQuery = searchQuery.trim();
             if (!trimmedQuery) return;
+
+            analytics.track('search_submit', {
+              properties: { query: trimmedQuery }
+            });
 
             navigate(`/catalog?search=${encodeURIComponent(trimmedQuery)}`);
             setSearchQuery('');
