@@ -46,6 +46,7 @@ export const apiFetch = async <T>(
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
 
+        window.location.href = "/login";
         throw new ApiError(401, "Unauthorized");
     }
 
