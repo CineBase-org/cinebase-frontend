@@ -2,12 +2,22 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
 export class ApiError extends Error {
     status: number;
+    code?: string;
+    detail?: string;
 
-    constructor(status: number, message: string) {
+    constructor(status: number, message: string, code?: string, detail?: string) {
         super(message);
         this.name = "ApiError";
         this.status = status;
+        this.code = code;
+        this.detail = detail;
     }
+}
+
+interface ErrorResponseBody {
+    detail?: string;
+    code?: string;
+    [key: string]: unknown;
 }
 
 export const apiFetch = async <T>(
@@ -40,9 +50,18 @@ export const apiFetch = async <T>(
     }
 
     if (!response.ok) {
+        let errorData: ErrorResponseBody = {};
+        try {
+            errorData = (await response.json()) as ErrorResponseBody;
+        } catch {
+          // Ignore JSON parsing errors for non-JSON error responses
+        }
+
         throw new ApiError(
             response.status,
-            `Request to ${path} failed with status ${response.status}`,
+            errorData.detail || `Request to ${path} failed with status ${response.status}`,
+            errorData.code,
+            errorData.detail
         );
     }
 
