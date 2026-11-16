@@ -1,0 +1,192 @@
+.actorPageContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: rem(1200);
+  margin: 0 auto;
+  padding: rem(40) rem(20);
+  padding-bottom: rem(40);
+
+  @include respond-to(desktop) {
+    padding-bottom: rem(75);
+  }
+}
+
+.actorHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(24);
+  background-color: $color-bg-panel;
+  border: 1px solid $color-card;
+  border-radius: rem(16);
+  padding: rem(24);
+  margin-bottom: rem(32);
+  box-shadow: 0 rem(8) rem(32) rgba(0, 0, 0, 0.4);
+  text-align: center;
+
+  @include respond-to(tablet) {
+    flex-direction: row;
+    text-align: left;
+    padding: rem(32);
+    gap: rem(32);
+    margin-bottom: rem(40);
+  }
+
+  @include respond-to(desktop) {
+    margin-bottom: rem(48);
+  }
+}
+
+.profileImage {
+  width: rem(160);
+  height: rem(160);
+  border-radius: 50%;
+  object-fit: cover;
+  border: rem(3) solid $color-accent;
+  box-shadow: 0 rem(4) rem(16) rgba(229, 9, 20, 0.3);
+}
+
+.noPhoto {
+  width: rem(160);
+  height: rem(160);
+  border-radius: 50%;
+  background-color: $color-bg-surface;
+  border: rem(3) solid $color-card;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-gray;
+  font-weight: 600;
+  font-size: rem(14);
+}
+
+.actorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8);
+}
+
+.actorName {
+  @include text-heading-1;
+  color: $color-white;
+  margin: 0;
+}
+
+.moviesCount {
+  @include text-caption;
+  color: $color-text-soft;
+  margin: 0;
+  font-size: rem(14);
+}
+
+.moviesSection {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: rem(16);
+  min-width: 0;
+
+  @include respond-to(tablet) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.sectionTitle {
+  @include text-heading-1;
+  color: $color-white;
+  margin: 0;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(12);
+  width: 100%;
+
+  @include respond-to(tablet) {
+    width: auto;
+    flex-shrink: 0;
+  }
+}
+
+.paginationInfo {
+  @include text-body;
+  color: $color-gray;
+  white-space: nowrap;
+}
+
+.paginationButtons {
+  display: flex;
+  align-items: center;
+  gap: rem(8);
+}
+
+.paginationButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: rem(40);
+  height: rem(40);
+  padding: 0;
+
+  border: 1px solid $color-white;
+  border-radius: 50%;
+  background: transparent;
+  color: $color-white;
+
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: $color-bg-surface;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  @include respond-to(desktop) {
+    width: rem(28);
+    height: rem(28);
+  }
+}
+
+.movies {
+  min-width: 0;
+  margin-top: rem(8);
+}
+
+.noMovies {
+  @include text-body;
+  color: $color-gray;
+}
+
+.loader, 
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: rem(400);
+  color: $color-text-soft;
+  font-size: rem(18);
+  text-align: center;
+  font-family: $font-family-base;
+}
+
+.error {
+  color: $color-accent;
+}

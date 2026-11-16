@@ -16,11 +16,12 @@ export interface MovieListItem {
 }
 
 export interface MovieCastMember {
-    id: number;
-    name: string;
-    profile_path: string | null;
-    character: string;
-    order: number;
+  id: number;
+  person_id: number;
+  name: string;
+  profile_path: string | null;
+  character: string;
+  order: number;
 }
 
 export interface StreamingPlatform {
@@ -46,7 +47,7 @@ export interface MovieDetail {
     streaming_platforms: StreamingPlatform[];
 }
 
-interface PaginatedResponse<T> {
+export interface PaginatedResponse<T> {
     count: number;
     next: string | null;
     previous: string | null;
@@ -75,10 +76,7 @@ export const getMovieById = (id: number) =>
 const randomInt = (maxExclusive: number) =>
     Math.floor(Math.random() * maxExclusive);
 
-/**
- * Picks a random movie from the catalog and returns its full detail.
- * Changes on every call, e.g. so a "trending now" slot differs on each page load.
- */
+
 export const getRandomMovie = async (): Promise<MovieDetail> => {
     const firstPage = await getMovies({ page: 1 });
     const pageSize = firstPage.results.length;
