@@ -12,11 +12,13 @@ import { MoviePicker } from "./pages/MoviePickerPage";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { usePageTracking } from "./hooks/usePageTracking";
+import { PaymentSuccess } from "./pages/PaymentSuccess";
+import { PaymentCancel } from "./pages/PaymentCancel";
 
 
 function App() {
   usePageTracking();
-  
+
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
@@ -29,6 +31,8 @@ function App() {
         <Route path="watchlist" element={<WatchList />} />
         <Route path="about" element={<About />} />
         <Route path="contact-us" element={<Contact />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/payment/cancel" element={<PaymentCancel />} />
         <Route element={<ProtectedRoute />}>
           <Route path="user" element={<UserPage />} />
         </Route>

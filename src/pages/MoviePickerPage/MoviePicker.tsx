@@ -11,6 +11,7 @@ import { apiFetch } from '../../api/client';
 import type { PickedMovie } from '../../types/movies';
 import { PreferencesSummary } from './components/PreferencesSummary';
 import { analytics } from '../../services/analytics';
+import { MoviePickerPaywall } from './components/MoviePickerPaywal';
 
 const DEFAULT_YEARS: [number, number] = [2010, 2026];
 
@@ -64,6 +65,20 @@ export const MoviePicker = () => {
   const [pickedMovie, setPickedMovie] = useState<PickedMovie | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<string | null>(null);
+  const [isSubscriptionRequired, setIsSubscriptionRequired] = useState(false);
+
+  const handleCheckout = async () => {
+    try {
+      const response = await apiFetch<{ url: string }>('/api/payments/checkout/', {
+      method: 'POST',
+      });
+      if (response.url) {
+        window.location.href = response.url;
+      }
+    } catch (error) {
+      console.error("Failed to start checkout:", error);
+    }
+  }
 
   const moodBaseGenres = selectedMood ? (MOOD_MAP[selectedMood] || []) : [];
 
@@ -151,13 +166,24 @@ export const MoviePicker = () => {
     try {
       const data = await apiFetch<PickedMovie>(`/api/movies/random/${queryString}`);
       setPickedMovie(data);
+      setIsSubscriptionRequired(false);
     } catch (err: unknown) {
       console.error("Error fetching random movie:", err);
+      const errorObj = err as { status?: number; code?: string };
+
+      if (errorObj?.status === 403 && errorObj?.code === 'subscription_required') {
+        setIsSubscriptionRequired(true);
+      } else {
       setIsError("No movies found matching your criteria. Try expanding your filters.");
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (isSubscriptionRequired) {
+    return <MoviePickerPaywall onCheckout={handleCheckout} />;
+  }
 
   return (
     <section className={styles.moviePickerContainer}>
