@@ -121,7 +121,7 @@ export const UsersComments = ({ movieId, className }: Props) => {
                 <div className={styles.commentHeader}>
                   
                   <UserAvatar 
-                    avatarUrl={comment.avatar} 
+                    avatarUrl={comment.author_avatar} 
                     className={styles.commentAuthorAvatar} 
                   />
 
