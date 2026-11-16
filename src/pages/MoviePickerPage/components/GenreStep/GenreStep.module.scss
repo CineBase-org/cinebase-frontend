@@ -72,11 +72,7 @@
 
   &:hover {
     color: $color-white;
-<<<<<<< HEAD
     background-color: color.adjust(#1f1f22, $lightness: 5%); 
-=======
-    background-color: color.adjust(#1f1f22, $lightness: 5%);
->>>>>>> 02d437ba588ed3f70856d0170a7f89b909d95b90
   }
 
   &.selected {
