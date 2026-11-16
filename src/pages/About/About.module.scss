@@ -91,6 +91,5 @@
     font-weight: 600;
     transition: background $time-fast;
 
-    &:hover { background-color: color.adjust(#e50914, $lightness: -5%); }
-  }
+    &:hover { background-color: color.adjust(#e50914, $lightness: -5%)}; } 
 }
