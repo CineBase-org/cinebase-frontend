@@ -8,6 +8,7 @@ export interface User {
   location: string;
   birth_date: string;
   avatar: string | null;
+  author_avatar?: string | null;
 }
 
 export interface AuthTokens {
