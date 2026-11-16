@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { MovieCastMember } from '../../../../api/movies';
 import styles from './Cast&CrewMovie.module.scss';
+import { Link } from 'react-router-dom';
 
 type Props = {
   casts: MovieCastMember[];
@@ -45,7 +46,12 @@ export const CastCrewMovie = ({ casts }: Props) => {
 
       <div ref={castListRef} className={styles.castList}>
         {casts.map((cast) => (
-          <article key={cast.id} className={styles.castCard}>
+          <Link
+            key={cast.person_id} 
+            to={`/person/${cast.person_id}`} 
+            className={styles.castCard}
+            style={{ textDecoration: 'none' }}
+          >
             {cast.profile_path ? (
               <img
                 className={styles.photo}
@@ -59,7 +65,7 @@ export const CastCrewMovie = ({ casts }: Props) => {
 
             <p className={styles.name}>{cast.name}</p>
             <p className={styles.character}>{cast.character}</p>
-          </article>
+          </Link>
         ))}
       </div>
     </section>
