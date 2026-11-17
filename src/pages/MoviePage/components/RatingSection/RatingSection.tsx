@@ -88,7 +88,7 @@ export const RatingSection = ({
       
     } catch (error) {
       console.error("Failed to send rating to backend:", error);
-      setRating(previousRating);
+      setRating(previousRating ?? 0);
     }
   };
 
