@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import clsx from "clsx";
 
 import { StarRating } from "../../../../components/StarRating";
@@ -34,17 +34,38 @@ export const RatingSection = ({
   const { rating: userRating, setRating } = useUserRating(movieId);
   const [hovered, setHovered] = useState<number | null>(null);
 
-  const count = ratingsCount + (userRating !== null ? 1 : 0);
-  const average =
-      userRating !== null ?
-          (averageRating * ratingsCount + userRating) / count
-      :   averageRating;
+  const [initialRating, setInitialRating] = useState<number | null | undefined>(undefined);
+  const hasInitialized = useRef(false);
+
+  useEffect(() => {
+    if (!hasInitialized.current && userRating !== undefined) {
+      hasInitialized.current = true;
+      setInitialRating(userRating);
+    }
+  }, [userRating]);
+
+  let count = ratingsCount;
+  let average = averageRating;
+
+  if (initialRating !== null && initialRating !== undefined) {
+    if (userRating !== initialRating) {
+      count = ratingsCount;
+      const totalSum = averageRating * ratingsCount - initialRating + (userRating ?? 0);
+      average = ratingsCount > 0 ? totalSum / ratingsCount : (userRating ?? averageRating);
+    }
+  } else {
+    if (userRating !== null && userRating !== undefined) {
+      count = ratingsCount + 1;
+      const totalSum = averageRating * ratingsCount + userRating;
+      average = totalSum / count;
+    }
+  }
 
   const feedbackValue = hovered ?? userRating;
 
   const handleRatingChange = async (newRating: number) => {
     if (!isAuthenticated) {
-      navigate("/login", { state: {from: location.pathname }});
+      navigate("/login", { state: { from: location.pathname } });
       return;
     }
 
@@ -67,45 +88,45 @@ export const RatingSection = ({
       
     } catch (error) {
       console.error("Failed to send rating to backend:", error);
-      setRating(previousRating ?? 0);
+      setRating(previousRating);
     }
-  }
+  };
 
-    return (
-        <section
-            className={clsx(styles.box, className)}
-            aria-label="Ratings"
-        >
-            <h2 className={styles.label}>Your Rating</h2>
-            <div className={styles.row}>
-                <StarRating
-                    value={average}
-                    size={26}
-                />
-                <span className={styles.score}>
-                    {count > 0 ? formatScore(average) : "–"} / 5
-                </span>
-            </div>
+  return (
+      <section
+          className={clsx(styles.box, className)}
+          aria-label="Ratings"
+      >
+          <h2 className={styles.label}>Average Rating</h2>
+          <div className={styles.row}>
+              <StarRating
+                  value={average}
+                  size={26}
+              />
+              <span className={styles.score}>
+                  {count > 0 ? formatScore(average) : "–"} / 5
+              </span>
+          </div>
 
-            <h2 className={styles.label}>Rate This Movie</h2>
-            <StarRating
-                value={userRating ?? 0}
-                size={26}
-                onChange={handleRatingChange}
-                onHover={setHovered}
-            />
+          <h2 className={styles.label}>Rate This Movie</h2>
+          <StarRating
+              value={userRating ?? 0}
+              size={26}
+              onChange={handleRatingChange}
+              onHover={setHovered}
+          />
 
-            <p
-                className={styles.feedback}
-                aria-live="polite"
-            >
-                {feedbackValue !== null && feedbackValue > 0
-                  ? LABELS[Math.ceil(feedbackValue) - 1]
-                  : ""}
-                {hovered === null && userRating !== null && (
-                    <span className={styles.thanks}> · Thanks for rating!</span>
-                )}
-            </p>
-        </section>
-    );
+          <p
+              className={styles.feedback}
+              aria-live="polite"
+          >
+              {feedbackValue !== null && feedbackValue > 0
+                ? LABELS[Math.ceil(feedbackValue) - 1]
+                : ""}
+              {hovered === null && userRating !== null && (
+                  <span className={styles.thanks}> · Thanks for rating!</span>
+              )}
+          </p>
+      </section>
+  );
 };

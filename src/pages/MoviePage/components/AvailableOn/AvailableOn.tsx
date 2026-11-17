@@ -12,23 +12,29 @@ interface Props {
     className?: string;
 }
 
-const getPlatformHomeUrl = (platformName: string): string => {
-  const homeUrls: Record<string, string> = {
-    "Netflix": "https://www.netflix.com",
-    "Apple TV Store": "https://tv.apple.com",
-    "YouTube": "https://www.youtube.com",
-    "Amazon Video": "https://www.primevideo.com",
-    "Fandango At Home": "https://athome.fandango.com",
-    "Google Play Movies": "https://play.google.com/store/movies",
-    "Disney Plus": "https://www.disneyplus.com/",
-    "HBO Max": "https://www.hbomax.com/",
-  };
-
-    return homeUrls[platformName] || "#";
+const HOME_URLS: Record<string, string> = {
+  "Netflix": "https://www.netflix.com",
+  "Apple TV Store": "https://tv.apple.com",
+  "YouTube": "https://www.youtube.com",
+  "Amazon Video": "https://www.primevideo.com",
+  "Amazon Prime Video": "https://www.primevideo.com",
+  "Fandango At Home": "https://athome.fandango.com",
+  "Google Play Movies": "https://play.google.com/store/movies",
+  "Disney Plus": "https://www.disneyplus.com/",
+  "HBO Max": "https://www.hbomax.com",
+  "Plex" : "https://www.plex.tv",
+  "fuboTV": "https://www.fubo.tv/",
+  "FXNow": "https://fxnow.fxnetworks.com",
+  "Starz": "https://www.starz.com/us/en/", 
+  "Apple TV Amazon Channel" : "https://www.primevideo.com/",
 };
 
 export const AvailableOn = ({ platforms, className }: Props) => {
-    if (platforms.length === 0) return null;
+  const filteredPlatforms = platforms.filter(
+    (platform) => platform.name in HOME_URLS
+  );
+
+    if (filteredPlatforms.length === 0) return null;
 
     return (
         <section
@@ -43,8 +49,8 @@ export const AvailableOn = ({ platforms, className }: Props) => {
             </h2>
 
             <ul className={styles.list}>
-                {platforms.map((platform) => {
-                    const homeUrl = getPlatformHomeUrl(platform.name);
+                {filteredPlatforms.map((platform) => {
+                    const homeUrl = HOME_URLS[platform.name];
 
                     return (
                         <li key={platform.id}>
