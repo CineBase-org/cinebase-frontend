@@ -38,7 +38,7 @@ const GENRE_NAME_TO_ID: Record<string, number> = {
   'War': 16,
   'Western': 18,
   'Documentary': 19,
-}
+};
 
 const MOODS: Moodoption[] = [
   { id: 'mind-bending', label: 'Mind-bending', icon: Brain },
