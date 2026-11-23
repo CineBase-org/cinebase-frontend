@@ -178,6 +178,7 @@ export const MoviePicker = () => {
       else if (errorObj?.status === 403 && errorObj?.code === 'subscription_required') {
         setIsSubscriptionRequired(true);
       } else {
+      setPickedMovie(null);
       setIsError("No movies found matching your criteria. Try expanding your filters.");
       }
     } finally {
