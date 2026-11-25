@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './MovierPicker.module.scss';
 import { Brain, Coffee, Film, Heart, Smile, Zap } from 'lucide-react';
@@ -21,23 +21,14 @@ const GENRES = [
   'Horror', 'Crime', 'Romance', 'Documentary', 'War', 'Western', 'History'
 ];
 
-const GENRE_NAME_TO_ID: Record<string, number> = {
-  'Sci-Fi': 1,
-  'Action': 2,
-  'Adventure': 3,
-  'Animation': 4,
-  'Fantasy': 5,
-  'Horror': 6,
-  'Thriller': 7,
-  'Comedy': 8,
-  'Drama': 10,
-  'Mystery': 11,
-  'Romance': 12,
-  'History': 13,
-  'Crime': 14,
-  'War': 16,
-  'Western': 18,
-  'Documentary': 19,
+interface ApiGenre {
+  id: number;
+  name: string;
+}
+
+const normalizeGenreName = (name: string): string => {
+  if (name === 'Science Fiction') return 'Sci-Fi';
+  return name;
 };
 
 const MOODS: Moodoption[] = [
@@ -57,6 +48,8 @@ const MOOD_MAP: Record<string, string[]> = {
 };
 
 export const MoviePicker = () => {
+  const [genreNameToId, setGenreNameToId] = useState<Record<string, number>>({});
+  const [isGenresLoading, setIsGenresLoading] = useState(true);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [yearRange, setYearRange] = useState<[number, number]>(DEFAULT_YEARS);
@@ -67,10 +60,43 @@ export const MoviePicker = () => {
   const [isError, setIsError] = useState<string | null>(null);
   const [isSubscriptionRequired, setIsSubscriptionRequired] = useState(false);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadGenres = async () => {
+      try {
+        const response = await apiFetch<ApiGenre[] | { results: ApiGenre[] }>('/api/genres/');
+        if (!isMounted) return;
+
+        const list = Array.isArray(response) ? response : (response?.results ?? []);
+        const map: Record<string, number> = {};
+
+        for (const item of list) {
+          map[normalizeGenreName(item.name)] = item.id;
+          map[item.name] = item.id;
+        }
+
+        setGenreNameToId(map);
+      } catch (error) {
+        console.error('Failed to load genres:', error);
+      } finally {
+        if (isMounted) {
+          setIsGenresLoading(false);
+        }
+      }
+    };
+
+    loadGenres();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const handleCheckout = async () => {
     try {
       const response = await apiFetch<{ url: string }>('/api/payments/checkout/', {
-      method: 'POST',
+        method: 'POST',
       });
       if (response.url) {
         window.location.href = response.url;
@@ -78,7 +104,7 @@ export const MoviePicker = () => {
     } catch (error) {
       console.error("Failed to start checkout:", error);
     }
-  }
+  };
 
   const moodBaseGenres = selectedMood ? (MOOD_MAP[selectedMood] || []) : [];
 
@@ -147,8 +173,8 @@ export const MoviePicker = () => {
     if (isSurprise !== true) {
       if (effectiveGenres.length > 0) {
         const genreIds = effectiveGenres
-        .map((g) => GENRE_NAME_TO_ID[g])
-        .filter((id) => id !== undefined);
+          .map((g) => genreNameToId[g])
+          .filter((id): id is number => typeof id === 'number');
 
         if (genreIds.length > 0) {
           params.append('genres', genreIds.join(','));
@@ -173,13 +199,11 @@ export const MoviePicker = () => {
 
       if (errorObj?.status === 401) {
         window.location.href = '/login';
-      } 
-      
-      else if (errorObj?.status === 403 && errorObj?.code === 'subscription_required') {
+      } else if (errorObj?.status === 403 && errorObj?.code === 'subscription_required') {
         setIsSubscriptionRequired(true);
       } else {
-      setPickedMovie(null);
-      setIsError("No movies found matching your criteria. Try expanding your filters.");
+        setPickedMovie(null);
+        setIsError("No movies found matching your criteria. Try expanding your filters.");
       }
     } finally {
       setIsLoading(false);
@@ -200,7 +224,9 @@ export const MoviePicker = () => {
         <h1 className={styles.title}>
           Find your next favorite <span>movie</span>
         </h1>
-        <p className={styles.headerDescription}>Tell us what you're in the mood for, and we'll find the perfect movie for you.</p>
+        <p className={styles.headerDescription}>
+          Tell us what you're in the mood for, and we'll find the perfect movie for you.
+        </p>
       </div>
 
       <div className={styles.grid}>
@@ -209,7 +235,8 @@ export const MoviePicker = () => {
             <GenreStep 
               genres={GENRES} 
               selectedGenres={selectedGenres} 
-              onToggleGenre={toggleGenre} 
+              onToggleGenre={toggleGenre}
+              hasActiveMood={Boolean(selectedMood)}
             />
             <MoodStep 
               moods={MOODS} 
@@ -232,7 +259,7 @@ export const MoviePicker = () => {
           </div>
 
           <SurpriseCard
-            isLoading={isLoading}
+            isLoading={isLoading || isGenresLoading}
             onSurprise={() => fetchRandomMovie(true)}
           />
         </div>
@@ -243,7 +270,7 @@ export const MoviePicker = () => {
           yearRange={yearRange}
           minRating={minRating}
           pickedMovie={pickedMovie}
-          isLoading={isLoading}
+          isLoading={isLoading || isGenresLoading}
           isError={isError}
           onReset={handleReset}
           onFindMovies={() => fetchRandomMovie(false)}
