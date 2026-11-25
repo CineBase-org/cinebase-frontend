@@ -6,9 +6,15 @@ interface GenreProps {
   genres: string[]; 
   selectedGenres: string[];
   onToggleGenre: (genre: string) => void;
+  hasActiveMood?: boolean;
 };
 
-export const GenreStep = ({ genres, selectedGenres, onToggleGenre }: GenreProps) => (
+export const GenreStep = ({ 
+  genres, 
+  selectedGenres, 
+  onToggleGenre,
+  hasActiveMood = false,
+}: GenreProps) => (
   <div className={styles.stepSection}>
     <div className={styles.stepTitle}>
       <span className={styles.stepNumber}>1</span>
@@ -18,7 +24,7 @@ export const GenreStep = ({ genres, selectedGenres, onToggleGenre }: GenreProps)
       {genres.map((genre) => {
         const isAll = genre === 'All';
         const isSelected = isAll
-          ? selectedGenres.length === 0
+          ? selectedGenres.length === 0 && !hasActiveMood
           : selectedGenres.includes(genre);
 
           return (
