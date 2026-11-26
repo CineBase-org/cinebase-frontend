@@ -29,6 +29,10 @@
   @include text-heading-1;
 }
 
+.status {
+  @include text-body;
+}
+
 
 .catalog {
   display: flex;
