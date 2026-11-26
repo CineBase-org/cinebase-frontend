@@ -176,6 +176,8 @@ export const CatalogPage = () => {
           <p className={styles.status}>
             Couldn't load movies right now.
           </p>
+        ) : films.length === 0 ? (
+          <p className={styles.status}>No movies found</p>
         ) : (
           <FilmList films={films} />
         )}
