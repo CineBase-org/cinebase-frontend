@@ -178,6 +178,10 @@ export const MoviePicker = () => {
 
         if (genreIds.length > 0) {
           params.append('genres', genreIds.join(','));
+
+          if (selectedGenres.length === 0 && selectedMood) {
+            params.append('genre_match', 'any');
+          }
         }
       }
       if (minRating > 0) {
